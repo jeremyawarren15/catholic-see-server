@@ -19,25 +19,21 @@ namespace ParishManager.Services
 
         public Parish CreateParish(ParishCreate createModel)
         {
-            using var ctx = _context;
-
             var parish = new Parish()
             {
                 ParishName = createModel.ParishName
             };
 
-            ctx.Parishes.Add(parish);
+            _context.Parishes.Add(parish);
 
-            ctx.SaveChanges();
+            _context.SaveChanges();
 
-            return ctx.Parishes.Find(parish);
+            return _context.Parishes.Find(parish);
         }
 
         public bool DeleteParish(int parishId)
         {
-            using var ctx = _context;
-
-            var parishToDelete = ctx.Parishes
+            var parishToDelete = _context.Parishes
                 .SingleOrDefault(x => x.Id == parishId);
 
             if (parishToDelete == null)
@@ -45,24 +41,20 @@ namespace ParishManager.Services
                 return false;
             }
 
-            ctx.Parishes.Remove(parishToDelete);
+            _context.Parishes.Remove(parishToDelete);
 
-            return ctx.SaveChanges() != 0;
+            return _context.SaveChanges() != 0;
         }
 
         public ICollection<Parish> GetAllParishes()
         {
-            using var ctx = _context;
-
-            return ctx.Parishes
+            return _context.Parishes
                 .ToList();
         }
 
         public Parish GetParish(int parishId)
         {
-            using var ctx = _context;
-
-            return ctx.Parishes
+            return _context.Parishes
                 .SingleOrDefault(x => x.Id == parishId);
         }
 
