@@ -6,5 +6,6 @@ namespace ParishManager.Models.Parish
 {
     public class ParishCreate
     {
+        public string ParishName { get; set; }
     }
 }

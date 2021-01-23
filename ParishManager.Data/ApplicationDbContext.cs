@@ -24,9 +24,9 @@ namespace ParishManager.Data
             base.OnModelCreating(builder);
         }
 
-        DbSet<Parish> Parishes { get; set; }
-        DbSet<UserParishAssociation> UserParishAssociations { get; set; }
-        DbSet<TimeSlot> TimeSlots { get; set; }
-        DbSet<TimeSlotCommitment> TimeSlotCommitments { get; set; }
+        public DbSet<Parish> Parishes { get; set; }
+        public DbSet<UserParishAssociation> UserParishAssociations { get; set; }
+        public DbSet<TimeSlot> TimeSlots { get; set; }
+        public DbSet<TimeSlotCommitment> TimeSlotCommitments { get; set; }
     }
 }

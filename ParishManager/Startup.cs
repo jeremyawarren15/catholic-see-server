@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using ParishManager.Data;
 using ParishManager.Services;
 using ParishManager.Services.Contracts;
@@ -37,6 +36,7 @@ namespace ParishManager
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            // Set up dependency injection
             services.AddTransient<IParishService, ParishService>();
 
             services.AddControllersWithViews();
