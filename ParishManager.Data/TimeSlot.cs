@@ -15,5 +15,9 @@ namespace ParishManager.Data
         public int Hour { get; set; }
         [Required]
         public DayOfWeek Day { get; set; }
+
+        [Required]
+        public virtual Parish Parish { get; set; }
+        public virtual ICollection<TimeSlotCommitment> TimeSlotCommitments { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace ParishManager.Data
     public class User : IdentityUser
     {
         public virtual ICollection<UserParishAssociation> UserParishAssociations { get; set; }
+        public virtual ICollection<TimeSlotCommitment> TimeSlotCommitments { get; set; }
     }
 }

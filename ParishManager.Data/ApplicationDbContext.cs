@@ -26,5 +26,7 @@ namespace ParishManager.Data
 
         DbSet<Parish> Parishes { get; set; }
         DbSet<UserParishAssociation> UserParishAssociations { get; set; }
+        DbSet<TimeSlot> TimeSlots { get; set; }
+        DbSet<TimeSlotCommitment> TimeSlotCommitments { get; set; }
     }
 }

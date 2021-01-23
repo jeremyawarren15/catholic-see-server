@@ -15,5 +15,6 @@ namespace ParishManager.Data
         public string ParishName { get; set; }
 
         public virtual ICollection<UserParishAssociation> UserParishAssociations { get; set; }
+        public virtual ICollection<TimeSlot> TimeSlots { get; set; }
     }
 }
