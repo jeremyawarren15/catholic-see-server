@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Models.Parish
+namespace ParishManager.Models.ParishModels
 {
     public class ParishCreate
     {

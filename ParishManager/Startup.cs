@@ -38,6 +38,7 @@ namespace ParishManager
 
             // Set up dependency injection
             services.AddScoped<IParishService, ParishService>();
+            services.AddScoped<ITimeSlotService, TimeSlotService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

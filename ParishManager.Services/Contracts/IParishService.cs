@@ -1,6 +1,5 @@
 ﻿using ParishManager.Data;
-using ParishManager.Models;
-using ParishManager.Models.Parish;
+using ParishManager.Models.ParishModels;
 using System;
 using System.Collections.Generic;
 
