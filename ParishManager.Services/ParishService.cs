@@ -24,22 +24,17 @@ namespace ParishManager.Services
                 ParishName = createModel.ParishName
             };
 
-            _context.Parishes.Add(parish);
+            var createdParish = _context.Parishes.Add(parish);
 
             _context.SaveChanges();
 
-            return _context.Parishes.Find(parish);
+            return createdParish.Entity;
         }
 
         public bool DeleteParish(int parishId)
         {
             var parishToDelete = _context.Parishes
                 .SingleOrDefault(x => x.Id == parishId);
-
-            if (parishToDelete == null)
-            {
-                return false;
-            }
 
             _context.Parishes.Remove(parishToDelete);
 
@@ -60,7 +55,14 @@ namespace ParishManager.Services
 
         public Parish UpdateParish(ParishUpdate updateModel)
         {
-            throw new NotImplementedException();
+            var parishToUpdate = _context.Parishes
+                .SingleOrDefault(x => x.Id == updateModel.Id);
+
+            parishToUpdate.ParishName = updateModel.ParishName;
+
+            _context.SaveChanges();
+
+            return parishToUpdate;
         }
     }
 }

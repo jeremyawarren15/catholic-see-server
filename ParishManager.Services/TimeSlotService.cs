@@ -67,7 +67,14 @@ namespace ParishManager.Services
 
         public TimeSlot UpdateTimeSlot(TimeSlotUpdate updateModel)
         {
-            throw new NotImplementedException();
+            var timeSlotToUpdate = _context.TimeSlots
+                .SingleOrDefault(x => x.Id == updateModel.Id);
+
+            timeSlotToUpdate.Location = updateModel.Location;
+
+            _context.SaveChanges();
+
+            return timeSlotToUpdate;
         }
     }
 }
