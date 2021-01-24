@@ -12,11 +12,16 @@ namespace ParishManager.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ITimeSlotCommitmentService _timeSlotCommitmentService;
+        private readonly IUserParishAssociationService _userParishAssociationService;
 
-        public UserService(ApplicationDbContext context, ITimeSlotCommitmentService timeSlotCommitmentService)
+        public UserService(
+            ApplicationDbContext context,
+            ITimeSlotCommitmentService timeSlotCommitmentService,
+            IUserParishAssociationService userParishAssociationService)
         {
             _context = context;
             _timeSlotCommitmentService = timeSlotCommitmentService;
+            _userParishAssociationService = userParishAssociationService;
         }
 
         /* * * * * * * * * * * * * * * * * * * * * *
@@ -51,22 +56,30 @@ namespace ParishManager.Services
                 .ToList();
         }
 
-        // have to finish after UserParishAssociationService
         public ICollection<User> GetAssociatedUsersForParish(int parishId)
         {
-            throw new NotImplementedException();
+            return _userParishAssociationService
+                .GetUserParishAssociationsForParish(parishId)
+                .Select(x => x.User)
+                .ToList();
         }
 
-        // have to finish after UserParishAssociationService
         public ICollection<User> GetNonParishioners(int parishId)
         {
-            throw new NotImplementedException();
+            return _userParishAssociationService
+                .GetUserParishAssociationsForParish(parishId)
+                .Where(x => !x.IsRegisteredParishioner)
+                .Select(x => x.User)
+                .ToList();
         }
 
-        // have to finish after UserParishAssociationService
         public ICollection<User> GetParishioners(int parishId)
         {
-            throw new NotImplementedException();
+            return _userParishAssociationService
+                .GetUserParishAssociationsForParish(parishId)
+                .Where(x => x.IsRegisteredParishioner)
+                .Select(x => x.User)
+                .ToList();
         }
 
         public User GetUser(string userId)

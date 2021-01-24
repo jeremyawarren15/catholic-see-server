@@ -41,6 +41,7 @@ namespace ParishManager
             services.AddScoped<ITimeSlotService, TimeSlotService>();
             services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
