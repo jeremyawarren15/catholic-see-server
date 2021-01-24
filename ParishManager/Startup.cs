@@ -37,7 +37,7 @@ namespace ParishManager
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Set up dependency injection
-            services.AddTransient<IParishService, ParishService>();
+            services.AddScoped<IParishService, ParishService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
