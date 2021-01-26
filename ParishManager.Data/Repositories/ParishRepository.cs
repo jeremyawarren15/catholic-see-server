@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ParishManager.Data.Repositories
 {
-    public class ParishRepository : Repository<Parish, int>
+    public class ParishRepository : Repository<Parish, int>, IParishRepository
     {
         public ParishRepository(ApplicationDbContext context)
             :base(context)

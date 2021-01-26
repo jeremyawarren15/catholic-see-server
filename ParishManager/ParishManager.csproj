@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParishManager.Data\ParishManager.Data.csproj" />
+    <ProjectReference Include="..\ParishManager.Services\ParishManager.Services.csproj" />
   </ItemGroup>
 
 </Project>

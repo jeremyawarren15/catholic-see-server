@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ParishManager.Data;
+using ParishManager.Data.Contracts;
+using ParishManager.Services;
+using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,11 +38,13 @@ namespace ParishManager
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Set up dependency injection
-            //services.AddScoped<IParishService, ParishService>();
+            services.AddScoped<IParishService, ParishService>();
             //services.AddScoped<ITimeSlotService, TimeSlotService>();
             //services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             //services.AddScoped<IUserService, UserService>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

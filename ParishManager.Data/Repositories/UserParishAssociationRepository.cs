@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ParishManager.Data.Repositories
 {
-    public class UserParishAssociationRepository : Repository<UserParishAssociation, int, int>
+    public class UserParishAssociationRepository : Repository<UserParishAssociation, int, int>, IUserParishAssociationRepository
     {
         public UserParishAssociationRepository(ApplicationDbContext context)
             :base(context)
