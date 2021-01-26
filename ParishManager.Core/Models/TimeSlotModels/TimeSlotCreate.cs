@@ -1,9 +1,9 @@
-﻿using ParishManager.Data;
+﻿using ParishManager.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Models.TimeSlotModels
+namespace ParishManager.Core.Models.TimeSlotModels
 {
     public class TimeSlotCreate
     {

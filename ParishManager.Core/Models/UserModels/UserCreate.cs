@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Models.UserModels
+namespace ParishManager.Core.Models.UserModels
 {
-    public class UserUpdate
+    public class UserCreate
     {
     }
 }

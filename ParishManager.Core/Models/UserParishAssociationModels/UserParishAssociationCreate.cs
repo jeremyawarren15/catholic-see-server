@@ -1,9 +1,8 @@
-﻿using ParishManager.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Models.UserParishAssociationModels
+namespace ParishManager.Core.Models.UserParishAssociationModels
 {
     public class UserParishAssociationCreate
     {

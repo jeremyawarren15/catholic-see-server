@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ParishManager.Data
+namespace ParishManager.Core.Entities
 {
     public class TimeSlotCommitment
     {
