@@ -6,12 +6,11 @@ using System.Text;
 
 namespace ParishManager.Data.Repositories
 {
-    public class ParishRepository : Repository<Parish, int>, IParishRepository
+    public class ParishRepository : Repository<Parish, int>
     {
         public ParishRepository(ApplicationDbContext context)
             :base(context)
         {
-
         }
     }
 }

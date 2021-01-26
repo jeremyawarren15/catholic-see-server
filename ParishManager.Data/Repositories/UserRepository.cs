@@ -1,14 +1,13 @@
 ﻿using ParishManager.Core.Entities;
-using ParishManager.Data.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ParishManager.Data.Repositories
 {
-    public class UserParishAssociationRepository : Repository<UserParishAssociation, int, int>
+    public class UserRepository : Repository<User, string>
     {
-        public UserParishAssociationRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context)
             :base(context)
         {
         }
