@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ParishManager.Core.Entities;
 using ParishManager.Data;
 using ParishManager.Data.Contracts;
 using ParishManager.Services;
@@ -34,14 +35,14 @@ namespace ParishManager
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Set up dependency injection
             services.AddScoped<IParishService, ParishService>();
-            //services.AddScoped<ITimeSlotService, TimeSlotService>();
-            //services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITimeSlotService, TimeSlotService>();
+            services.AddScoped<ITimeFormatterService, TimeFormatterService>();
+            services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

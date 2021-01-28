@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ParishManager.Models.TimeSlot.TimeSlotListItemViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>St. John The Evangelist</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @if (item.IsClaimedByUser)
+                    {
+                        @Html.ActionLink("Unclaim", "Unclaim", new { id = item.TimeSlotId })
+                        <text> | </text>
+                        @Html.ActionLink("Request Sub", "RequestSub", new { id = item.TimeSlotId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Claim", "Claim", new { id = item.TimeSlotId })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

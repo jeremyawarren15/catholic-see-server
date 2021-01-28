@@ -1,4 +1,5 @@
-﻿using ParishManager.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ParishManager.Core.Entities;
 using ParishManager.Data.Contracts;
 using System;
 using System.Collections.Generic;

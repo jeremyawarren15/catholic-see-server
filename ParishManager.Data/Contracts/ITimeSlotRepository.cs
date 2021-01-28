@@ -7,5 +7,6 @@ namespace ParishManager.Data.Contracts
 {
     public interface ITimeSlotRepository : IRepository<TimeSlot, int>
     {
+        IEnumerable<TimeSlot> GetTimeSlotsByParishId(int parishId);
     }
 }
