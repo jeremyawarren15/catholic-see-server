@@ -1,8 +1,10 @@
-﻿@model IEnumerable<ParishManager.Models.TimeSlot.TimeSlotListItemViewModel>
+﻿@model ParishManager.Models.TimeSlot.TimeSlotIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
+
+<partial name="_AlertPartial" for="AlertMessage">
 
 <h1>St. John The Evangelist</h1>
 
@@ -13,19 +15,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Day)
+                Day
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hour)
+                Hour
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                Location
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.TimeSlots) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Day)

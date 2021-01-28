@@ -25,11 +25,11 @@ namespace ParishManager.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string alertMessageText = null)
         {
             var userId = _userManager.GetUserId(User);
 
-            var model = _timeSlotService.GetTimeSlotsByParishId(userId, 1)
+            var timeSlots = _timeSlotService.GetTimeSlotsByParishId(userId, 1)
                 .Select(x => new TimeSlotListItemViewModel()
                 {
                     TimeSlotId = x.TimeSlotId,
@@ -39,7 +39,13 @@ namespace ParishManager.Controllers
                     IsClaimedByUser = x.IsClaimedByUser
                 });
 
-            return View(model);
+            var viewModel = new TimeSlotIndexViewModel()
+            {
+                TimeSlots = timeSlots,
+                AlertMessage = alertMessageText
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Claim(int id)
@@ -48,9 +54,7 @@ namespace ParishManager.Controllers
 
             _commitmentService.Claim(userId, id);
 
-            TempData["alert"] = "Hour successfully claimed!";
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { alertMessageText = "Hour successfully claimed!" });
         }
 
         public IActionResult Unclaim(int id)
@@ -59,9 +63,7 @@ namespace ParishManager.Controllers
 
             _commitmentService.Unclaim(userId, id);
 
-            TempData["alert"] = "Hour successfully unclaimed!";
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { alertMessageText = "Hour successfully unclaimed!" });
         }
     }
 }

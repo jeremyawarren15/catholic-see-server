@@ -1,7 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
+﻿a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -68,4 +65,57 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* Alert animation
+-------------------------------------------------- */
+@-webkit-keyframes swing-out-top-bck{
+    0%{
+        -webkit-transform:rotateX(0deg);
+        transform:rotateX(0deg);
+        -webkit-transform-origin:top;
+        transform-origin:top;
+        opacity:1;
+    }
+    100%{
+        -webkit-transform:rotateX(-100deg);
+        transform:rotateX(-100deg);
+        -webkit-transform-origin:top;
+        transform-origin:top;
+        opacity:0;
+        position:absolute;
+        visibility:hidden;
+    }
+}
+@keyframes swing-out-top-bck{
+    0%{
+        -webkit-transform:rotateX(0deg);
+        transform:rotateX(0deg);
+        -webkit-transform-origin:top;
+        transform-origin:top;
+        opacity:1;
+    }
+    50%{
+        -webkit-transform:rotateX(-100deg);
+        transform:rotateX(-100deg);
+        -webkit-transform-origin:top;
+        transform-origin:top;
+        opacity:0;
+    }
+    100%{
+        -webkit-transform:rotateX(-100deg);
+        transform:rotateX(-100deg);
+        -webkit-transform-origin:top;
+        transform-origin:top;
+        opacity:0;
+        position:absolute;
+        visibility:hidden;
+    }
+}
+
+#status-alert {
+    animation-name: swing-out-top-bck;
+    animation-duration: 1s;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
 }

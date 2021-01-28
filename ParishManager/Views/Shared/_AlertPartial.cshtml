@@ -1,0 +1,8 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <div id="status-alert" class="alert alert-success" role="alert">
+        @Model
+    </div>
+}
