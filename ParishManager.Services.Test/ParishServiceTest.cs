@@ -39,17 +39,6 @@ namespace ParishManager.Services.Test
         }
 
         [Test]
-        public void Delete_CallsNecessaryCalls()
-        {
-            var parish = new Parish();
-
-            _service.Delete(parish);
-
-            A.CallTo(() => _unitOfWork.Parishes.Remove(parish)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _unitOfWork.Complete()).MustHaveHappenedOnceExactly();
-        }
-
-        [Test]
         public void Delete_GetsAndRemovesParish()
         {
             var parishId = 100;

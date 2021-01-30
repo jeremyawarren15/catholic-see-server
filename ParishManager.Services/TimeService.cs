@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParishManager.Services
 {
-    public class TimeFormatterService : ITimeFormatterService
+    public class TimeService : ITimeService
     {
         public string ConvertTimeToString(int hour)
         {
@@ -30,6 +30,18 @@ namespace ParishManager.Services
             }
 
             return $"{hour - 12} PM";
+        }
+
+        public IEnumerable<string> GetAllHours()
+        {
+            var hours = new List<string>();
+
+            for (var i = 0; i < 24; i++)
+            {
+                hours.Add(ConvertTimeToString(i));
+            }
+
+            return hours;
         }
     }
 }

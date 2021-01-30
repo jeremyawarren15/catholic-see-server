@@ -9,5 +9,6 @@ namespace ParishManager.Models.TimeSlot
     {
         public IEnumerable<TimeSlotListItemViewModel> TimeSlots { get; set; }
         public string AlertMessage { get; set; }
+        public int ParishId { get; set; }
     }
 }

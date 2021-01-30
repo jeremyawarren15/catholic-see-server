@@ -4,8 +4,9 @@ using System.Text;
 
 namespace ParishManager.Services.Contracts
 {
-    public interface ITimeFormatterService
+    public interface ITimeService
     {
         string ConvertTimeToString(int hour);
+        IEnumerable<string> GetAllHours();
     }
 }

@@ -41,7 +41,7 @@ namespace ParishManager
             // Set up dependency injection
             services.AddScoped<IParishService, ParishService>();
             services.AddScoped<ITimeSlotService, TimeSlotService>();
-            services.AddScoped<ITimeFormatterService, TimeFormatterService>();
+            services.AddScoped<ITimeService, TimeService>();
             services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
 

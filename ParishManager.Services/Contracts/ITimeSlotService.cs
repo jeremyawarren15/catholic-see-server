@@ -9,5 +9,6 @@ namespace ParishManager.Services.Contracts
     public interface ITimeSlotService : IService<TimeSlot, int>
     {
         IEnumerable<TimeSlotListItem> GetTimeSlotsByParishId(string userId, int parishId);
+        TimeSlot Create(TimeSlotCreate model);
     }
 }

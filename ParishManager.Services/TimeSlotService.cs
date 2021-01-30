@@ -12,9 +12,9 @@ namespace ParishManager.Services
     public class TimeSlotService : ITimeSlotService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ITimeFormatterService _timeService;
+        private readonly ITimeService _timeService;
 
-        public TimeSlotService(IUnitOfWork unitOfWork, ITimeFormatterService timeService)
+        public TimeSlotService(IUnitOfWork unitOfWork, ITimeService timeService)
         {
             _unitOfWork = unitOfWork;
             _timeService = timeService;
@@ -22,27 +22,49 @@ namespace ParishManager.Services
 
         public TimeSlot Create(TimeSlot entity)
         {
-            throw new NotImplementedException();
+            var timeSlot = _unitOfWork.TimeSlots.Add(entity);
+
+            _unitOfWork.Complete();
+
+            return timeSlot;
         }
 
-        public void Delete(TimeSlot entity)
+        public TimeSlot Create(TimeSlotCreate model)
         {
-            throw new NotImplementedException();
+            var parish = _unitOfWork.Parishes.Get(model.ParishId);
+
+            var entity = new TimeSlot()
+            {
+                Parish = parish,
+                Day = model.Day,
+                Hour = model.Hour,
+                Location = model.Location
+            };
+
+            var timeSlot = _unitOfWork.TimeSlots.Add(entity);
+
+            _unitOfWork.Complete();
+
+            return timeSlot;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var timeSlot = _unitOfWork.TimeSlots.Get(id);
+
+            _unitOfWork.TimeSlots.Remove(timeSlot);
+
+            return _unitOfWork.Complete() != 0;
         }
 
         public TimeSlot Get(int id)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.TimeSlots.Get(id);
         }
 
         public IEnumerable<TimeSlot> GetAll()
         {
-            throw new NotImplementedException();
+            return _unitOfWork.TimeSlots.GetAll();
         }
 
         public IEnumerable<TimeSlotListItem> GetTimeSlotsByParishId(string userId, int parishId)
@@ -57,11 +79,6 @@ namespace ParishManager.Services
                     Location = x.Location,
                     IsClaimedByUser = x.TimeSlotCommitments.Any(x => x.User.Id == userId)
                 });
-        }
-
-        public TimeSlot Update(TimeSlot entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

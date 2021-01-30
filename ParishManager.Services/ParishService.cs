@@ -25,20 +25,13 @@ namespace ParishManager.Services
             return createdEntity;
         }
 
-        public void Delete(Parish entity)
-        {
-            _unitOfWork.Parishes.Remove(entity);
-
-            _unitOfWork.Complete();
-        }
-
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             var parishToDelete = _unitOfWork.Parishes.Get(id);
 
             _unitOfWork.Parishes.Remove(parishToDelete);
 
-            _unitOfWork.Complete();
+            return _unitOfWork.Complete() != 0;
         }
 
         public Parish Get(int id)

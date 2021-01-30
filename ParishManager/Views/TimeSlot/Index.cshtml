@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    var createRouteData = new Dictionary<string, string>
+    {
+        { "parishId", Model.ParishId.ToString() }
+    };
 }
 
 <partial name="_AlertPartial" for="AlertMessage">
@@ -9,7 +14,7 @@
 <h1>St. John The Evangelist</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
 </p>
 <table class="table">
     <thead>
