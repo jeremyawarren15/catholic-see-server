@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -15,6 +16,8 @@ namespace ParishManager.Core.Entities
         public int Hour { get; set; }
         [Required]
         public DayOfWeek Day { get; set; }
+        public int MinimumNumberOfAdorers { get; set; }
+        public bool Enabled { get; set; }
 
         [Required]
         public virtual Parish Parish { get; set; }
