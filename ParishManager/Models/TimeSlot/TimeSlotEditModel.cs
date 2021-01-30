@@ -15,8 +15,8 @@ namespace ParishManager.Models.TimeSlot
         public string HourText { get; set; }
         public string Location { get; set; }
         public bool Enabled { get; set; }
-        [DisplayName("Minimum Required Adorers")]
-        public int MinimumRequiredAdorers  { get; set; }
+        [DisplayName("Minimum Number of Adorers")]
+        public int MinimumNumberOfAdorers  { get; set; }
         public IEnumerable<TimeSlotEditUserList> CommittedAdorers { get; set; }
     }
 }

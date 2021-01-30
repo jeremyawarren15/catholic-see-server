@@ -11,5 +11,7 @@ namespace ParishManager.Core.Models.TimeSlotModels
         public DayOfWeek Day { get; set; }
         public int Hour { get; set; }
         public string Location { get; set; }
+        public bool Enabled { get; set; }
+        public int MinimumNumberOfAdorers { get; set; }
     }
 }

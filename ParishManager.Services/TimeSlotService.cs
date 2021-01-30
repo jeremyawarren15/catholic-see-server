@@ -86,6 +86,11 @@ namespace ParishManager.Services
             var timeSlot = _unitOfWork.TimeSlots.Get(model.Id);
 
             timeSlot.Location = model.Location;
+            timeSlot.Enabled = model.Enabled;
+            if (model.MinimumNumberOfAdorers >= 0)
+            {
+                timeSlot.MinimumNumberOfAdorers = model.MinimumNumberOfAdorers;
+            }
 
             _unitOfWork.Complete();
 

@@ -96,7 +96,9 @@ namespace ParishManager.Controllers
                 Day = model.Day,
                 Hour = model.Hour,
                 ParishId = model.ParishId,
-                Location = model.Location
+                Location = model.Location,
+                MinimumNumberOfAdorers = model.MinimumNumberOfAdorers,
+                Enabled = model.Enabled
             };
 
             _timeSlotService.Create(timeSlot);
@@ -120,10 +122,10 @@ namespace ParishManager.Controllers
             {
                 Day = timeSlot.Day,
                 HourText = _timeService.ConvertTimeToString(timeSlot.Hour),
-                Enabled = true,
+                Enabled = timeSlot.Enabled,
                 Location = timeSlot.Location,
                 TimeSlotId = id,
-                MinimumRequiredAdorers = 2,
+                MinimumNumberOfAdorers = timeSlot.MinimumNumberOfAdorers,
                 CommittedAdorers = committedUsers
             };
 
@@ -136,7 +138,9 @@ namespace ParishManager.Controllers
             var timeSlot = new TimeSlotUpdate()
             {
                 Id = model.TimeSlotId,
-                Location = model.Location
+                Location = model.Location,
+                Enabled = model.Enabled,
+                MinimumNumberOfAdorers = model.MinimumNumberOfAdorers
             };
 
             _timeSlotService.Update(timeSlot);
