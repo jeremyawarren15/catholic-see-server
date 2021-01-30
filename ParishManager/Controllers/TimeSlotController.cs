@@ -77,12 +77,7 @@ namespace ParishManager.Controllers
 
         public IActionResult Create(int parishId)
         {
-            var hoursList = _timeService.GetAllHours()
-                .Select((x, index) => new SelectListItem()
-                {
-                    Text = x,
-                    Value = index.ToString()
-                });
+            var hoursList = GetHoursList();
 
             var viewModel = new TimeSlotCreateViewModel
             {
@@ -107,6 +102,56 @@ namespace ParishManager.Controllers
             _timeSlotService.Create(timeSlot);
 
             return RedirectToAction("Index", new { parishId = model.ParishId, alertMessageText = "New time slot successfully created!" });
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var timeSlot = _timeSlotService.Get(id);
+
+            var committedUsers = _commitmentService
+                .GetCommitedUsersForTimeSlot(id)
+                .Select(x => new TimeSlotEditUserList()
+                {
+                    Name = x.UserName,
+                    Email = x.Email
+                });
+
+            var viewModel = new TimeSlotEditModel()
+            {
+                Day = timeSlot.Day,
+                HourText = _timeService.ConvertTimeToString(timeSlot.Hour),
+                Enabled = true,
+                Location = timeSlot.Location,
+                TimeSlotId = id,
+                MinimumRequiredAdorers = 2,
+                CommittedAdorers = committedUsers
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TimeSlotEditModel model)
+        {
+            var timeSlot = new TimeSlotUpdate()
+            {
+                Id = model.TimeSlotId,
+                Location = model.Location
+            };
+
+            _timeSlotService.Update(timeSlot);
+
+            return RedirectToAction("Index", new { alertMessageText = "Time slot successfully updated!" });
+        }
+
+        private IEnumerable<SelectListItem> GetHoursList()
+        {
+            return _timeService.GetAllHours()
+                .Select((x, index) => new SelectListItem()
+                {
+                    Text = x,
+                    Value = index.ToString()
+                });
         }
     }
 }

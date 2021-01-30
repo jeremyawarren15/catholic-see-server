@@ -30,6 +30,12 @@ namespace ParishManager.Services
             return _unitOfWork.Complete() != 0;
         }
 
+        public IEnumerable<User> GetCommitedUsersForTimeSlot(int timeSlotId)
+        {
+            return _unitOfWork.TimeSlotCommitments
+                .GetCommittedUsersForTimeSlot(timeSlotId);
+        }
+
         public bool Unclaim(string user, int timeSlot)
         {
             var commitment = _unitOfWork.TimeSlotCommitments

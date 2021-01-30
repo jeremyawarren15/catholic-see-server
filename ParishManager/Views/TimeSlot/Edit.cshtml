@@ -1,0 +1,72 @@
+﻿@model ParishManager.Models.TimeSlot.TimeSlotEditModel
+
+<h4>
+    @Model.Day @Model.HourText
+</h4>
+<a asp-action="Index">Back to List</a>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            @Html.HiddenFor(x => x.TimeSlotId)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinimumRequiredAdorers" class="control-label"></label>
+                <input asp-for="MinimumRequiredAdorers" class="form-control" />
+                <span asp-validation-for="MinimumRequiredAdorers" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Enabled" /> @Html.DisplayNameFor(model => model.Enabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Delete", "Delete", new { id = Model.TimeSlotId })
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-8">
+        @if (!Model.CommittedAdorers.Any())
+        {
+            <h5 class="text-center">No adorers for this hour.</h5>
+        }
+        else 
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CommittedAdorers) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -80,5 +80,16 @@ namespace ParishManager.Services
                     IsClaimedByUser = x.TimeSlotCommitments.Any(x => x.User.Id == userId)
                 });
         }
+
+        public TimeSlot Update(TimeSlotUpdate model)
+        {
+            var timeSlot = _unitOfWork.TimeSlots.Get(model.Id);
+
+            timeSlot.Location = model.Location;
+
+            _unitOfWork.Complete();
+
+            return timeSlot;
+        }
     }
 }

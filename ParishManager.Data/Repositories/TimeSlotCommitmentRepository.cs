@@ -1,4 +1,5 @@
-﻿using ParishManager.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ParishManager.Core.Entities;
 using ParishManager.Data.Contracts;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace ParishManager.Data.Repositories
         {
             return _context.TimeSlotCommitments
                 .FirstOrDefault(x => x.User.Id == userId && x.TimeSlot.Id == timeSlotId);
+        }
+
+        public IEnumerable<User> GetCommittedUsersForTimeSlot(int timeSlotId)
+        {
+            return _context.TimeSlotCommitments
+                .Include(x => x.User)
+                .Where(x => x.TimeSlot.Id == timeSlotId)
+                .Select(x => x.User)
+                .ToList();
         }
     }
 }

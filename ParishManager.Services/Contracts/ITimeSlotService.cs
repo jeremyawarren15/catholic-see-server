@@ -10,5 +10,6 @@ namespace ParishManager.Services.Contracts
     {
         IEnumerable<TimeSlotListItem> GetTimeSlotsByParishId(string userId, int parishId);
         TimeSlot Create(TimeSlotCreate model);
+        TimeSlot Update(TimeSlotUpdate model);
     }
 }
