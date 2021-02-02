@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210202025317_AddSubstitutions.cs" />
+    <Compile Remove="Migrations\20210202025317_AddSubstitutions.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.11" />

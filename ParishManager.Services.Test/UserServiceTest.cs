@@ -26,7 +26,7 @@ namespace ParishManager.Services.Test
         [Test]
         public void IsAdminForParish_UserNotAssociatedToParish_ReturnsFalse()
         {
-            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<string>.Ignored, A<int>.Ignored))
+            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<int>.Ignored, A<string>.Ignored))
                 .Returns(null);
 
             var result = service.IsAdminForParish("dummy", 23423);
@@ -42,7 +42,7 @@ namespace ParishManager.Services.Test
                 IsAdmin = false
             };
 
-            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<string>.Ignored, A<int>.Ignored))
+            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<int>.Ignored, A<string>.Ignored))
                 .Returns(association);
 
             var result = service.IsAdminForParish("dummy", 23423);
@@ -58,7 +58,7 @@ namespace ParishManager.Services.Test
                 IsAdmin = true
             };
 
-            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<string>.Ignored, A<int>.Ignored))
+            A.CallTo(() => unitOfWork.UserParishAssociations.Get(A<int>.Ignored, A<string>.Ignored))
                 .Returns(association);
 
             var result = service.IsAdminForParish("dummy", 23423);
