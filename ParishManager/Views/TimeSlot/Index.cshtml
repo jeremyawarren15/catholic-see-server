@@ -13,50 +13,56 @@
 
 <h1>St. John The Evangelist</h1>
 
-<p>
-    <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Day
-            </th>
-            <th>
-                Hour
-            </th>
-            <th>
-                Location
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TimeSlots) {
+    @if (Model.IsAdmin)
+    {
+        <p>
+            <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
+        </p>
+    }
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Day)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hour)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @if (item.IsClaimedByUser)
-                    {
-                        @Html.ActionLink("Unclaim", "Unclaim", new { id = item.TimeSlotId })
-                        <text> | </text>
-                        @Html.ActionLink("Request Sub", "RequestSub", new { id = item.TimeSlotId })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Claim", "Claim", new { id = item.TimeSlotId })
-                    }
-                     | @Html.ActionLink("Edit", "Edit", new { id = item.TimeSlotId })
-                </td>
+                <th>
+                    Day
+                </th>
+                <th>
+                    Hour
+                </th>
+                <th>
+                    Location
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TimeSlots) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Day)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @if (item.IsClaimedByUser)
+                        {
+                            @Html.ActionLink("Unclaim", "Unclaim", new { id = item.TimeSlotId })
+                            <text> | </text>
+                            @Html.ActionLink("Request Sub", "RequestSub", new { id = item.TimeSlotId })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Claim", "Claim", new { id = item.TimeSlotId })
+                        }
+                        @if (Model.IsAdmin)
+                        {
+                            <text> | </text>@Html.ActionLink("Edit", "Edit", new { id = item.TimeSlotId })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

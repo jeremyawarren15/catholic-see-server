@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParishManager.Data.Contracts
 {
-    public interface IUserParishAssociationRepository : IRepository<UserParishAssociation, int, int>
+    public interface IUserParishAssociationRepository : IRepository<UserParishAssociation, int, string>
     {
     }
 }
