@@ -157,5 +157,14 @@ namespace ParishManager.Controllers
                     Value = index.ToString()
                 });
         }
+
+        public IActionResult Delete(int id)
+        {
+            var timeSlot = _timeSlotService.Get(id);
+
+            _timeSlotService.Delete(id);
+
+            return RedirectToAction("Index", new { id = timeSlot.Parish.Id, alertMessageText = "Time slot successfully deleted!" });
+        }
     }
 }

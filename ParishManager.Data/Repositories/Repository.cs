@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ParishManager.Data.Repositories
 {
-    public class Repository<T, K> : IRepository<T, K> where T : class
+    public abstract class Repository<T, K> : IRepository<T, K> where T : class
     {
         protected ApplicationDbContext Context;
 
@@ -31,7 +31,7 @@ namespace ParishManager.Data.Repositories
             return Context.Set<T>().Where(predicate);
         }
 
-        public T Get(K id)
+        public virtual T Get(K id)
         {
             return Context.Set<T>().Find(id);
         }
@@ -53,7 +53,7 @@ namespace ParishManager.Data.Repositories
     }
 
     // Use this when you have a repository with two primary keys
-    public class Repository<T, K, W> : IRepository<T, K, W> where T : class
+    public abstract class Repository<T, K, W> : IRepository<T, K, W> where T : class
     {
         protected ApplicationDbContext Context;
 

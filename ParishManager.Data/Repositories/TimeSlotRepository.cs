@@ -18,6 +18,13 @@ namespace ParishManager.Data.Repositories
             _context = context;
         }
 
+        public override TimeSlot Get(int id)
+        {
+            return _context.TimeSlots
+                .Include(x => x.Parish)
+                .SingleOrDefault(x => x.Id == id);
+        }
+
         public IEnumerable<TimeSlot> GetTimeSlotsByParishId(int parishId)
         {
             return _context.Parishes
