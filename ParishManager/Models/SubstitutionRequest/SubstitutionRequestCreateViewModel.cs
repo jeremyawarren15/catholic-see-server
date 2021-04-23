@@ -17,6 +17,6 @@ namespace ParishManager.Models.SubstitutionRequest
         public string HourString { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         public string ParishName { get; set; }
-        public List<SelectListItem> UpcomingDates { get; set; }
+        public IEnumerable<SelectListItem> UpcomingDates { get; set; }
     }
 }

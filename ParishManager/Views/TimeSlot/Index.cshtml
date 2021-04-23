@@ -51,7 +51,7 @@
                         {
                             @Html.ActionLink("Unclaim", "Unclaim", new { id = item.TimeSlotId })
                             <text> | </text>
-                            @Html.ActionLink("Request Sub", "RequestSub", new { id = item.TimeSlotId })
+                            @Html.ActionLink("Request Sub", "Create", "SubstitutionRequest", new { timeSlotId = item.TimeSlotId })
                         }
                         else
                         {

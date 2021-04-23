@@ -56,7 +56,7 @@ namespace ParishManager.Controllers
                 TimeSlots = timeSlots,
                 AlertMessage = alertMessageText,
                 ParishId = parishId,
-                IsAdmin = isAdmin
+                IsAdmin = isAdmin,
             };
 
             return View(viewModel);

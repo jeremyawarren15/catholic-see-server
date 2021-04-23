@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ParishManager.Models.SubstitutionRequest;
 using ParishManager.Services.Contracts;
 using System;
@@ -24,14 +25,31 @@ namespace ParishManager.Controllers
         {
             var timeSlot = _timeSlotService.Get(timeSlotId);
 
+            var upcomingDates = GetUpcomingDates(timeSlot.Day);
+
             var model = new SubstitutionRequestCreateViewModel()
             {
                 ParishName = timeSlot.Parish.ParishName,
                 DayOfWeek = timeSlot.Day,
                 HourString = _timeService.ConvertTimeToString(timeSlot.Hour),
                 TimeSlotId = timeSlotId,
+                UpcomingDates = upcomingDates
             };
-            return View();
+
+            return View(model);
+        }
+
+        private IEnumerable<SelectListItem> GetUpcomingDates(DayOfWeek day)
+        {
+            // Gets next 10 valid dates
+            var dates = _timeService.GetUpcomingDates(day, 10)
+                .Select(x => new SelectListItem()
+                {
+                    Text = x.ToShortDateString(),
+                    Value = x.ToShortDateString()
+                });
+
+            return dates;
         }
 
         [HttpPost]
