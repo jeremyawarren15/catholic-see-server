@@ -218,5 +218,13 @@ namespace ParishManager.Services.Test
 
             Assert.AreNotEqual(DateTime.Now.ToShortDateString(), result.ToShortDateString());
         }
+
+        [Test]
+        public void GetUpcomingDates_HasUniqueDates()
+        {
+            var result = _service.GetUpcomingDates(DayOfWeek.Monday, 2);
+
+            Assert.AreNotEqual(result.First().Ticks, result.Last().Ticks);
+        }
     }
 }
