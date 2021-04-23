@@ -3,6 +3,7 @@ using ParishManager.Data.Contracts;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ParishManager.Services
@@ -32,14 +33,22 @@ namespace ParishManager.Services
 
         public IEnumerable<User> GetCommitedUsersForTimeSlot(int timeSlotId)
         {
-            return _unitOfWork.TimeSlotCommitments
-                .GetCommittedUsersForTimeSlot(timeSlotId);
+            return _unitOfWork.TimeSlots
+                .Get(timeSlotId)
+                .TimeSlotCommitments
+                .Select(x => x.User);
         }
 
         public bool Unclaim(string user, int timeSlot)
         {
             var commitment = _unitOfWork.TimeSlotCommitments
-                .GetByUserAndTimeSlotId(user, timeSlot);
+                .Find(x => x.User.Id == user && x.TimeSlot.Id == timeSlot)
+                .SingleOrDefault();
+
+            if (commitment == null)
+            {
+                return false;
+            }
 
             _unitOfWork.TimeSlotCommitments.Remove(commitment);
 

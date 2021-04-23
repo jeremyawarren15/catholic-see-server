@@ -26,7 +26,7 @@ namespace ParishManager.Data.Repositories
             Context.Set<T>().AddRange(entities);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return Context.Set<T>().Where(predicate);
         }
@@ -36,9 +36,9 @@ namespace ParishManager.Data.Repositories
             return Context.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return Context.Set<T>().ToList();
+            return Context.Set<T>();
         }
 
         public void Remove(T entity)
@@ -72,7 +72,7 @@ namespace ParishManager.Data.Repositories
             Context.Set<T>().AddRange(entities);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return Context.Set<T>().Where(predicate);
         }
@@ -82,9 +82,9 @@ namespace ParishManager.Data.Repositories
             return Context.Set<T>().Find(firstKey, secondKey);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return Context.Set<T>().ToList();
+            return Context.Set<T>();
         }
 
         public void Remove(T entity)

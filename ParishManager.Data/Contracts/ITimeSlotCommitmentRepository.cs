@@ -7,7 +7,5 @@ namespace ParishManager.Data.Contracts
 {
     public interface ITimeSlotCommitmentRepository : IRepository<TimeSlotCommitment, int>
     {
-        TimeSlotCommitment GetByUserAndTimeSlotId(string userId, int timeSlotId);
-        IEnumerable<User> GetCommittedUsersForTimeSlot(int timeSlotId);
     }
 }

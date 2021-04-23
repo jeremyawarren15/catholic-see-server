@@ -67,6 +67,14 @@ namespace ParishManager.Services
             return _unitOfWork.TimeSlots.GetAll();
         }
 
+        public IEnumerable<User> GetCommittedUsersForTimeSlot(int timeSlotId)
+        {
+            return _unitOfWork.TimeSlots
+                .Get(timeSlotId)
+                .TimeSlotCommitments
+                .Select(x => x.User);
+        }
+
         public IEnumerable<TimeSlotListItem> GetTimeSlotsByParishId(string userId, int parishId)
         {
             return _unitOfWork.TimeSlots

@@ -17,20 +17,5 @@ namespace ParishManager.Data.Repositories
         {
             _context = context;
         }
-
-        public TimeSlotCommitment GetByUserAndTimeSlotId(string userId, int timeSlotId)
-        {
-            return _context.TimeSlotCommitments
-                .FirstOrDefault(x => x.User.Id == userId && x.TimeSlot.Id == timeSlotId);
-        }
-
-        public IEnumerable<User> GetCommittedUsersForTimeSlot(int timeSlotId)
-        {
-            return _context.TimeSlotCommitments
-                .Include(x => x.User)
-                .Where(x => x.TimeSlot.Id == timeSlotId)
-                .Select(x => x.User)
-                .ToList();
-        }
     }
 }
