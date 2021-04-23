@@ -43,5 +43,11 @@ namespace ParishManager.Services
 
             return hours;
         }
+
+        public IEnumerable<DateTime> GetUpcomingDates(DayOfWeek Day, int numberOfDates = 1)
+        {
+            var list = new List<DateTime>();
+            return list;
+        }
     }
 }

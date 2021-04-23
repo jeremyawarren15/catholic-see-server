@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FakeItEasy;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,6 +116,107 @@ namespace ParishManager.Services.Test
             Assert.AreEqual(result[21], expectedList[21]);
             Assert.AreEqual(result[22], expectedList[22]);
             Assert.AreEqual(result[23], expectedList[23]);
+        }
+
+        [Test]
+        public void GetUpcomingDates_ReturnsOneDateAsDefault()
+        {
+            var result = _service.GetUpcomingDates(DayOfWeek.Monday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Tuesday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Wednesday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Thursday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Friday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Saturday);
+            Assert.AreEqual(1, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Sunday);
+            Assert.AreEqual(1, result.Count());
+        } 
+
+        [TestCase(1)]
+        [TestCase(100)]
+        [TestCase(4578)]
+        [TestCase(213)]
+        public void GetUpcomingDates_ReturnsCorrectNumberOfDates(int numberOfDates)
+        {
+            var result = _service.GetUpcomingDates(DayOfWeek.Monday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Tuesday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Wednesday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Thursday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Friday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Saturday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+
+            result = _service.GetUpcomingDates(DayOfWeek.Sunday, numberOfDates);
+            Assert.AreEqual(numberOfDates, result.Count());
+        }
+
+        [TestCase(DayOfWeek.Sunday)]
+        [TestCase(DayOfWeek.Monday)]
+        [TestCase(DayOfWeek.Tuesday)]
+        [TestCase(DayOfWeek.Wednesday)]
+        [TestCase(DayOfWeek.Thursday)]
+        [TestCase(DayOfWeek.Friday)]
+        [TestCase(DayOfWeek.Saturday)]
+        public void GetUpcomingDates_DatesAllCorrectDay(DayOfWeek dayOfWeek)
+        {
+            var result = _service.GetUpcomingDates(dayOfWeek, 1000);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotEmpty(result);
+            Assert.IsFalse(result.Any(x => x.DayOfWeek != dayOfWeek));
+        }
+
+        [Test]
+        public void GetUpcomingDates_DatesAreOrderedCorrectly()
+        {
+            var result = _service.GetUpcomingDates(DayOfWeek.Tuesday, 100).ToList();
+
+            var expectedSort = result.OrderBy(x => x.Ticks).ToList();
+
+            Assert.IsNotNull(result);
+            Assert.IsNotEmpty(result);
+
+            for (int i = 0; i < result.Count(); i++)
+            {
+                Assert.AreEqual(expectedSort[i], result[i]);
+            }
+        }
+
+        [TestCase(Int32.MinValue)]
+        [TestCase(-34534)]
+        [TestCase(-1)]
+        public void GetUpcomingDates_ThrowsErrorForNegativeUpcomingDates(int numberOfDates)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => _service.GetUpcomingDates(DayOfWeek.Thursday, numberOfDates));
+        }
+
+        [Test]
+        public void GetUpcomingDates_DoesNotIncludeDateIfFirstDateIsToday()
+        {
+            var result = _service.GetUpcomingDates(DayOfWeek.Friday, 1).First();
+
+            Assert.AreNotEqual(DateTime.Now.ToShortDateString(), result.ToShortDateString());
         }
     }
 }

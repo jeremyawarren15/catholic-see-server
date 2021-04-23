@@ -8,5 +8,6 @@ namespace ParishManager.Services.Contracts
     {
         string ConvertTimeToString(int hour);
         IEnumerable<string> GetAllHours();
+        IEnumerable<DateTime> GetUpcomingDates(DayOfWeek Day, int numberOfDates = 1);
     }
 }
