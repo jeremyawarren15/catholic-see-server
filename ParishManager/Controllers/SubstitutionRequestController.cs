@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Core.Entities;
-using ParishManager.Core.Models.SubstitutionRequest;
+using ParishManager.Data.Entities;
+using ParishManager.Data.Models.SubstitutionRequest;
 using ParishManager.Models.SubstitutionRequest;
 using ParishManager.Services.Contracts;
 using System;
@@ -79,7 +79,7 @@ namespace ParishManager.Controllers
                 UserId = _userManager.GetUserId(User)
             };
 
-            var wasCreated = _substitutionRequestService.CreateSubstitutionRequest(createModel);
+            var wasCreated = _substitutionRequestService.Create(createModel);
 
             // TODO: need to add the temp message to display
 

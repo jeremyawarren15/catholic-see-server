@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Core.Models.UserModels
+namespace ParishManager.Data.Models.UserModels
 {
     public class UserUpdate
     {

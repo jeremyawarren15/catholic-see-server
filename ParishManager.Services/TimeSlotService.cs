@@ -1,6 +1,6 @@
-﻿using ParishManager.Core.Entities;
-using ParishManager.Core.Models.TimeSlotModels;
-using ParishManager.Data.Contracts;
+﻿using ParishManager.Data;
+using ParishManager.Data.Entities;
+using ParishManager.Data.Models.TimeSlotModels;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -9,76 +9,43 @@ using System.Text;
 
 namespace ParishManager.Services
 {
-    public class TimeSlotService : ITimeSlotService
+    public class TimeSlotService : ServiceBase<TimeSlot, int>, ITimeSlotService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
         private readonly ITimeService _timeService;
 
-        public TimeSlotService(IUnitOfWork unitOfWork, ITimeService timeService)
+        public TimeSlotService(ApplicationDbContext context, ITimeService timeService) : base(context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
             _timeService = timeService;
-        }
-
-        public TimeSlot Create(TimeSlot entity)
-        {
-            var timeSlot = _unitOfWork.TimeSlots.Add(entity);
-
-            _unitOfWork.Complete();
-
-            return timeSlot;
         }
 
         public TimeSlot Create(TimeSlotCreate model)
         {
-            var parish = _unitOfWork.Parishes.Get(model.ParishId);
-
             var entity = new TimeSlot()
             {
-                Parish = parish,
+                ParishId = model.ParishId,
                 Day = model.Day,
                 Hour = model.Hour,
                 Location = model.Location
             };
 
-            var timeSlot = _unitOfWork.TimeSlots.Add(entity);
+            var timeSlot = _context.TimeSlots
+                .Add(entity)
+                .Entity;
 
-            _unitOfWork.Complete();
+            _context.SaveChanges();
 
             return timeSlot;
         }
 
-        public bool Delete(int id)
-        {
-            var timeSlot = _unitOfWork.TimeSlots.Get(id);
-
-            _unitOfWork.TimeSlots.Remove(timeSlot);
-
-            return _unitOfWork.Complete() != 0;
-        }
-
-        public TimeSlot Get(int id)
-        {
-            return _unitOfWork.TimeSlots.Get(id);
-        }
-
-        public IEnumerable<TimeSlot> GetAll()
-        {
-            return _unitOfWork.TimeSlots.GetAll();
-        }
-
-        public IEnumerable<User> GetCommittedUsersForTimeSlot(int timeSlotId)
-        {
-            return _unitOfWork.TimeSlots
-                .Get(timeSlotId)
-                .TimeSlotCommitments
-                .Select(x => x.User);
-        }
-
         public IEnumerable<TimeSlotListItem> GetTimeSlotsByParishId(string userId, int parishId)
         {
-            return _unitOfWork.TimeSlots
-                .GetTimeSlotsByParishId(parishId)
+            // The reason userId is necessary is because this is supposed to
+            // tell you which of the time slots for the parish are clamied by
+            // the given user. The name of this method may not be the best.
+            return _context.TimeSlots
+                .Where(x => x.ParishId == parishId)
                 .Select(x => new TimeSlotListItem()
                 {
                     TimeSlotId = x.Id,
@@ -91,7 +58,8 @@ namespace ParishManager.Services
 
         public TimeSlot Update(TimeSlotUpdate model)
         {
-            var timeSlot = _unitOfWork.TimeSlots.Get(model.Id);
+            var timeSlot = _context.TimeSlots
+                .SingleOrDefault(x => x.Id == model.Id);
 
             timeSlot.Location = model.Location;
             timeSlot.Enabled = model.Enabled;
@@ -100,7 +68,7 @@ namespace ParishManager.Services
                 timeSlot.MinimumNumberOfAdorers = model.MinimumNumberOfAdorers;
             }
 
-            _unitOfWork.Complete();
+            _context.SaveChanges();
 
             return timeSlot;
         }

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Core.Entities;
-using ParishManager.Core.Models.TimeSlotModels;
+using ParishManager.Data.Entities;
+using ParishManager.Data.Models.TimeSlotModels;
 using ParishManager.Models.TimeSlot;
 using ParishManager.Services.Contracts;
 using System;

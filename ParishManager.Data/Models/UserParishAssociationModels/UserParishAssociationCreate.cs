@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Core.Models.UserParishAssociationModels
+namespace ParishManager.Data.Models.UserParishAssociationModels
 {
     public class UserParishAssociationCreate
     {

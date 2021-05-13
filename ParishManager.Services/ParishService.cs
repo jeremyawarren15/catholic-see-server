@@ -1,52 +1,36 @@
-﻿using ParishManager.Core.Entities;
-using ParishManager.Data.Contracts;
+﻿using ParishManager.Data;
+using ParishManager.Data.Entities;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ParishManager.Services
 {
-    public class ParishService : IParishService
+    public class ParishService : ServiceBase<Parish, int>, IParishService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
 
-        public ParishService(IUnitOfWork unitOfWork)
+        public ParishService(ApplicationDbContext context) : base(context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         public Parish Create(Parish entity)
         {
-            var createdEntity = _unitOfWork.Parishes.Add(entity);
+            var returnedEntity = _context.Parishes
+                .Add(entity)
+                .Entity;
 
-            _unitOfWork.Complete();
+            _context.SaveChanges();
 
-            return createdEntity;
-        }
-
-        public bool Delete(int id)
-        {
-            var parishToDelete = _unitOfWork.Parishes.Get(id);
-
-            _unitOfWork.Parishes.Remove(parishToDelete);
-
-            return _unitOfWork.Complete() != 0;
-        }
-
-        public Parish Get(int id)
-        {
-            return _unitOfWork.Parishes.Get(id);
-        }
-
-        public IEnumerable<Parish> GetAll()
-        {
-            return _unitOfWork.Parishes.GetAll();
+            return returnedEntity;
         }
 
         public Parish Update(Parish entity)
         {
-            var parishToUpdate = _unitOfWork.Parishes.Get(entity.Id);
+            var parishToUpdate = Get(entity);
 
             if (parishToUpdate == null)
             {
@@ -55,7 +39,7 @@ namespace ParishManager.Services
 
             parishToUpdate.ParishName = entity.ParishName;
 
-            _unitOfWork.Complete();
+            _context.SaveChanges();
 
             return parishToUpdate;
         }

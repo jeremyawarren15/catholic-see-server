@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Core.Entities
+namespace ParishManager.Data.Entities
 {
     public class User : IdentityUser
     {

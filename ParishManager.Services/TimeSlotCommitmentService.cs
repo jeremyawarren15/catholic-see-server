@@ -1,5 +1,5 @@
-﻿using ParishManager.Core.Entities;
-using ParishManager.Data.Contracts;
+﻿using ParishManager.Data;
+using ParishManager.Data.Entities;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,49 +10,48 @@ namespace ParishManager.Services
 {
     public class TimeSlotCommitmentService : ITimeSlotCommitmentService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
 
-        public TimeSlotCommitmentService(IUnitOfWork unitOfWork)
+        public TimeSlotCommitmentService(ApplicationDbContext context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         public bool Claim(string userId, int timeSlotId)
         {
             var commitment = new TimeSlotCommitment()
             {
-                User = _unitOfWork.Users.Get(userId),
-                TimeSlot = _unitOfWork.TimeSlots.Get(timeSlotId),
+                UserId = userId,
+                TimeSlotId = timeSlotId,
                 Active = true
             };
 
-            _unitOfWork.TimeSlotCommitments.Add(commitment);
+            _context.TimeSlotCommitments.Add(commitment);
 
-            return _unitOfWork.Complete() != 0;
+            return _context.SaveChanges() != 0;
         }
 
         public IEnumerable<User> GetCommitedUsersForTimeSlot(int timeSlotId)
         {
-            return _unitOfWork.TimeSlots
-                .Get(timeSlotId)
+            return _context.TimeSlots
+                .SingleOrDefault(x => x.Id == timeSlotId)
                 .TimeSlotCommitments
                 .Select(x => x.User);
         }
 
         public bool Unclaim(string user, int timeSlot)
         {
-            var commitment = _unitOfWork.TimeSlotCommitments
-                .Find(x => x.User.Id == user && x.TimeSlot.Id == timeSlot)
-                .SingleOrDefault();
+            var commitment = _context.TimeSlotCommitments
+                .SingleOrDefault(x => x.UserId == user && x.TimeSlotId == timeSlot);
 
             if (commitment == null)
             {
                 return false;
             }
 
-            _unitOfWork.TimeSlotCommitments.Remove(commitment);
+            _context.TimeSlotCommitments.Remove(commitment);
 
-            return _unitOfWork.Complete() != 0;
+            return _context.SaveChanges() != 0;
         }
     }
 }

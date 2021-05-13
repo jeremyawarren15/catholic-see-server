@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ParishManager.Core.Entities;
 using ParishManager.Data;
-using ParishManager.Data.Contracts;
+using ParishManager.Data.Entities;
 using ParishManager.Services;
 using ParishManager.Services.Contracts;
 using System;
@@ -32,8 +31,11 @@ namespace ParishManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -46,8 +48,6 @@ namespace ParishManager
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISubstitutionRequestService, SubstitutionRequestService>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ParishManager.Core.Entities
+namespace ParishManager.Data.Entities
 {
     public class TimeSlot
     {
@@ -18,6 +18,7 @@ namespace ParishManager.Core.Entities
         public DayOfWeek Day { get; set; }
         public int MinimumNumberOfAdorers { get; set; }
         public bool Enabled { get; set; }
+        public int ParishId { get; set; }
 
         [Required]
         public virtual Parish Parish { get; set; }

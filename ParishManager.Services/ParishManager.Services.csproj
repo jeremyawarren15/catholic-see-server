@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ParishManager.Core\ParishManager.Core.csproj" />
     <ProjectReference Include="..\ParishManager.Data\ParishManager.Data.csproj" />
   </ItemGroup>
 

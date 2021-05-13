@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Core.Models.ParishModels
+namespace ParishManager.Data.Models.ParishModels
 {
-    public class ParishCreate
+    public class ParishUpdate
     {
+        public int Id { get; set; }
         public string ParishName { get; set; }
     }
 }

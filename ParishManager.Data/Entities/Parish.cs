@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ParishManager.Core.Entities
+namespace ParishManager.Data.Entities
 {
     public class Parish
     {

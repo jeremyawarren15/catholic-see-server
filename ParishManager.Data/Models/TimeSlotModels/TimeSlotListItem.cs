@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ParishManager.Core.Models.TimeSlotModels
+namespace ParishManager.Data.Models.TimeSlotModels
 {
     public class TimeSlotListItem
     {

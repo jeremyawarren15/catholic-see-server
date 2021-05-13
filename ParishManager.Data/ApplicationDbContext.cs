@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ParishManager.Core.Entities;
+using ParishManager.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

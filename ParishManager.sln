@@ -5,13 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager", "ParishManager\ParishManager.csproj", "{09FC1943-9D52-4877-92BB-ADF3A848EDC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Core", "ParishManager.Core\ParishManager.Core.csproj", "{6F6BDFEA-CD41-4756-AE43-220C232A2D46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Data", "ParishManager.Data\ParishManager.Data.csproj", "{7456F47A-E6D6-4E07-BE28-FDBFE5DAFCB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParishManager.Data", "ParishManager.Data\ParishManager.Data.csproj", "{7456F47A-E6D6-4E07-BE28-FDBFE5DAFCB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Services", "ParishManager.Services\ParishManager.Services.csproj", "{819312BB-42F3-40DB-A7BD-AFABED94CF0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParishManager.Services", "ParishManager.Services\ParishManager.Services.csproj", "{819312BB-42F3-40DB-A7BD-AFABED94CF0C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParishManager.Services.Test", "ParishManager.Services.Test\ParishManager.Services.Test.csproj", "{8CA8CF9C-7787-4F64-910A-237875F30DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Services.Test", "ParishManager.Services.Test\ParishManager.Services.Test.csproj", "{8CA8CF9C-7787-4F64-910A-237875F30DA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{09FC1943-9D52-4877-92BB-ADF3A848EDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09FC1943-9D52-4877-92BB-ADF3A848EDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09FC1943-9D52-4877-92BB-ADF3A848EDC0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F6BDFEA-CD41-4756-AE43-220C232A2D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F6BDFEA-CD41-4756-AE43-220C232A2D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F6BDFEA-CD41-4756-AE43-220C232A2D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F6BDFEA-CD41-4756-AE43-220C232A2D46}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7456F47A-E6D6-4E07-BE28-FDBFE5DAFCB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7456F47A-E6D6-4E07-BE28-FDBFE5DAFCB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7456F47A-E6D6-4E07-BE28-FDBFE5DAFCB8}.Release|Any CPU.ActiveCfg = Release|Any CPU

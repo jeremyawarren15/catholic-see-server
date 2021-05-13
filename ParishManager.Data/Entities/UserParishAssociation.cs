@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace ParishManager.Core.Entities
+namespace ParishManager.Data.Entities
 {
     public class UserParishAssociation
     {
