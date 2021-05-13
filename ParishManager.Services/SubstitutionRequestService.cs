@@ -18,9 +18,27 @@ namespace ParishManager.Services
             _context = context;
         }
 
-        public bool Create(SubstitutionRequestCreate createModel)
+        public SubstitutionRequest Create(SubstitutionRequestCreate createModel)
         {
-            throw new NotImplementedException();
+            var timeSlotCommitmentId = _context.TimeSlotCommitments
+                .SingleOrDefault(x => x.TimeSlotId == createModel.TimeSlotId && x.UserId == createModel.UserId)
+                .Id;
+
+            var entity = new SubstitutionRequest()
+            {
+                TimeSlotCommitmentId = timeSlotCommitmentId,
+                DateOfSubstitution = createModel.DateOfSubstitution,
+                CreatedDate = DateTime.Now,
+                UserId = createModel.UserId
+            };
+
+            entity = _context.SubstitutionRequests
+                .Add(entity)
+                .Entity;
+
+            _context.SaveChanges();
+
+            return entity;
         }
     }
 }

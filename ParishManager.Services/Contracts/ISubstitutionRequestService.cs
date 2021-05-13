@@ -8,6 +8,6 @@ namespace ParishManager.Services.Contracts
 {
     public interface ISubstitutionRequestService : IService<SubstitutionRequest, int>
     {
-        bool Create(SubstitutionRequestCreate createModel);
+        SubstitutionRequest Create(SubstitutionRequestCreate createModel);
     }
 }
