@@ -14,6 +14,7 @@ namespace ParishManager.Data
         public ITimeSlotCommitmentRepository TimeSlotCommitments { get; private set; }
         public ITimeSlotRepository TimeSlots { get; private set; }
         public IUserParishAssociationRepository UserParishAssociations { get; private set; }
+        public ISubstitutionRequestRepository SubstitutionRequests { get; private set; }
         public IUserRepository Users { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)

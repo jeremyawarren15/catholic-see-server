@@ -44,6 +44,7 @@ namespace ParishManager
             services.AddScoped<ITimeService, TimeService>();
             services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISubstitutionRequestService, SubstitutionRequestService>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

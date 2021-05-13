@@ -11,6 +11,7 @@ namespace ParishManager.Data.Contracts
         ITimeSlotRepository TimeSlots { get; }
         IUserParishAssociationRepository UserParishAssociations { get; }
         IUserRepository Users { get; }
+        ISubstitutionRequestRepository SubstitutionRequests { get; }
 
         int Complete();
     }

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace ParishManager.Core.Models.SubstitutionRequest
 {
-    class SubstitutionRequestCreate
+    public class SubstitutionRequestCreate
     {
+        public string UserId { get; set; }
+        public int TimeSlotId { get; set; }
+        public DateTime DateOfSubstitution { get; set; }
     }
 }

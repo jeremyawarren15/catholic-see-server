@@ -46,15 +46,13 @@ namespace ParishManager.Services
 
         public IEnumerable<DateTime> GetUpcomingDates(DayOfWeek day, int numberOfDates = 1)
         {
-            if (numberOfDates < 1)
+            if (numberOfDates <= 0)
             {
-                throw new ArgumentOutOfRangeException("GetUpcomingDates() requires numberOfDates to be greater than 1.");
+                throw new ArgumentOutOfRangeException("GetUpcomingDates() requires numberOfDates to be greater than 0.");
             }
 
             var list = new List<DateTime>();
             var currentDate = GetNextOccurringDate(day);
-
-
 
             for (int i = 0; i < numberOfDates; i++)
             {

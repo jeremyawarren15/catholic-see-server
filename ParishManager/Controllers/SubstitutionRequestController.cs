@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ParishManager.Core.Entities;
+using ParishManager.Core.Models.SubstitutionRequest;
 using ParishManager.Models.SubstitutionRequest;
 using ParishManager.Services.Contracts;
 using System;
@@ -14,11 +17,19 @@ namespace ParishManager.Controllers
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly ITimeService _timeService;
+        private readonly ISubstitutionRequestService _substitutionRequestService;
+        private readonly UserManager<User> _userManager;
 
-        public SubstitutionRequestController(ITimeSlotService timeSlotService, ITimeService timeService)
+        public SubstitutionRequestController(
+            ITimeSlotService timeSlotService,
+            ITimeService timeService,
+            ISubstitutionRequestService substitutionRequestService,
+            UserManager<User> userManager)
         {
             _timeSlotService = timeSlotService;
             _timeService = timeService;
+            _substitutionRequestService = substitutionRequestService;
+            _userManager = userManager;
         }
 
         public ActionResult Create(int timeSlotId)
@@ -54,16 +65,25 @@ namespace ParishManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SubstitutionRequestCreateViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+
+            var createModel = new SubstitutionRequestCreate()
             {
-                return View();
-            }
+                TimeSlotId = model.TimeSlotId,
+                DateOfSubstitution = model.DateOfSubstitution,
+                UserId = _userManager.GetUserId(User)
+            };
+
+            var wasCreated = _substitutionRequestService.CreateSubstitutionRequest(createModel);
+
+            // TODO: need to add the temp message to display
+
+            return RedirectToAction("Index", "TimeSlot");
         }
     }
 }
