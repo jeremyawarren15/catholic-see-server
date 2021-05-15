@@ -1,4 +1,4 @@
-﻿@model ParishManager.Models.TimeSlot.TimeSlotIndexViewModel
+﻿@model ParishManager.Areas.TimeSlot.Models.TimeSlotIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -49,13 +49,13 @@
                     <td>
                         @if (item.IsClaimedByUser)
                         {
-                            @Html.ActionLink("Unclaim", "Unclaim", new { id = item.TimeSlotId })
+                            @Html.ActionLink("Unclaim", "Unclaim", "Claim", new { Area="TimeSlot", id = item.TimeSlotId })
                             <text> | </text>
                             @Html.ActionLink("Request Sub", "Create", "SubstitutionRequest", new { timeSlotId = item.TimeSlotId })
                         }
                         else
                         {
-                            @Html.ActionLink("Claim", "Claim", new { id = item.TimeSlotId })
+                            @Html.ActionLink("Claim", "Claim", "Claim", new { Area="TimeSlot", id = item.TimeSlotId })
                         }
                         @if (Model.IsAdmin)
                         {

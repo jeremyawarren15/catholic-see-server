@@ -2,19 +2,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ParishManager.Areas.TimeSlot.Models;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.TimeSlotModels;
-using ParishManager.Models.TimeSlot;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Controllers
+namespace ParishManager.Areas.TimeSlot.Controllers
 {
     [Authorize]
-    public class TimeSlotController : Controller
+    [Area("TimeSlot")]
+    public class HomeController : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly ITimeSlotCommitmentService _commitmentService;
@@ -22,7 +23,7 @@ namespace ParishManager.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
 
-        public TimeSlotController(
+        public HomeController(
             ITimeSlotService timeSlotService,
             ITimeSlotCommitmentService commitmentService,
             ITimeService timeService,
@@ -62,24 +63,6 @@ namespace ParishManager.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Claim(int id)
-        {
-            var userId = _userManager.GetUserId(User);
-
-            _commitmentService.Claim(userId, id);
-
-            return RedirectToAction("Index", new { alertMessageText = "Hour successfully claimed!" });
-        }
-
-        public IActionResult Unclaim(int id)
-        {
-            var userId = _userManager.GetUserId(User);
-
-            _commitmentService.Unclaim(userId, id);
-
-            return RedirectToAction("Index", new { alertMessageText = "Hour successfully unclaimed!" });
-        }
-
         public IActionResult Create(int parishId)
         {
             var userId = _userManager.GetUserId(User);
@@ -87,7 +70,7 @@ namespace ParishManager.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", new { parishId, alertMessageText = "Could not create time slot due to improper access rights." });
+                return RedirectToAction("Index", "TimeSlot", new { Area = "TimeSlot", parishId, alertMessageText = "Could not create time slot due to improper access rights." });
             }
 
             var hoursList = GetHoursList();

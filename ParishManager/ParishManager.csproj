@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ParishManager.Services\ParishManager.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\TimeSlot\Data\" />
+  </ItemGroup>
+
 </Project>

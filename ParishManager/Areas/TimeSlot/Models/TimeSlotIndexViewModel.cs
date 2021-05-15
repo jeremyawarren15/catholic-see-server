@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Models.TimeSlot
+namespace ParishManager.Areas.TimeSlot.Models
 {
     public class TimeSlotIndexViewModel
     {
