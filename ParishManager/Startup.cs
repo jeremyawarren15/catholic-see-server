@@ -87,12 +87,11 @@ namespace ParishManager
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapAreaControllerRoute(
+                endpoints.MapControllerRoute(
                     name: "areas",
-                    areaName: "TimeSlot",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                     );
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }
