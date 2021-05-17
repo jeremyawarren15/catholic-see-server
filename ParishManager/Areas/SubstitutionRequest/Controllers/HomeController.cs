@@ -86,7 +86,7 @@ namespace ParishManager.Areas.SubstitutionRequest.Controllers
 
             // TODO: need to add the temp message to display
 
-            return RedirectToAction("Index", "TimeSlot");
+            return RedirectToAction("Index", "Home", new { Area = AreaName.TimeSlot });
         }
     }
 }

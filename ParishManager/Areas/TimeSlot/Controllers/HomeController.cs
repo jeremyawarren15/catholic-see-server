@@ -93,7 +93,8 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", new {
+                return RedirectToAction("Index", "Home", new {
+                    Area = AreaName.TimeSlot,
                     parishId = model.ParishId,
                     alertMessageText = "Could not create time slot due to improper access rights."
                 });
@@ -111,7 +112,8 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             _timeSlotService.Create(timeSlot);
 
-            return RedirectToAction("Index", new {
+            return RedirectToAction("Index", "Home", new {
+                Area = AreaName.TimeSlot,
                 parishId = model.ParishId,
                 alertMessageText = "New time slot successfully created!"
             });
@@ -126,7 +128,8 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", new {
+                return RedirectToAction("Index", "Home", new {
+                    Area = AreaName.TimeSlot,
                     parishId = timeSlot.Parish.Id,
                     alertMessageText = "Could not edit time slot due to improper access rights."
                 });
@@ -170,7 +173,11 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             _timeSlotService.Update(timeSlot);
 
-            return RedirectToAction("Index", new { alertMessageText = "Time slot successfully updated!" });
+            return RedirectToAction("Index", "Home", new
+            {
+                Area = AreaName.TimeSlot,
+                alertMessageText = "Time slot successfully updated!"
+            });
         }
 
         private IEnumerable<SelectListItem> GetHoursList()
@@ -192,7 +199,9 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", new {
+                return RedirectToAction("Index", "Home", new
+                {
+                    Area = AreaName.TimeSlot,
                     parishId = timeSlot.Parish.Id,
                     alertMessageText = "Could not delete time slot due to improper access rights."
                 });
@@ -200,7 +209,12 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             _timeSlotService.Delete(id);
 
-            return RedirectToAction("Index", new { id = timeSlot.Parish.Id, alertMessageText = "Time slot successfully deleted!" });
+            return RedirectToAction("Index", "Home", new
+            {
+                Area = AreaName.TimeSlot,
+                id = timeSlot.Parish.Id,
+                alertMessageText = "Time slot successfully deleted!"
+            });
         }
     }
 }

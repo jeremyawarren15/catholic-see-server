@@ -51,7 +51,7 @@
                         {
                             @Html.ActionLink("Unclaim", "Unclaim", "Claim", new { Area=AreaName.TimeSlot, id = item.TimeSlotId })
                             <text> | </text>
-                            <a asp-area=@AreaName.SubstitutionRequest asp-controller="Home" asp-action="Create" asp-route-id="@item.TimeSlotId">Parishes</a>
+                            <a asp-area=@AreaName.SubstitutionRequest asp-controller="Home" asp-action="Create" asp-route-id="@item.TimeSlotId">Request Sub</a>
                         }
                         else
                         {
