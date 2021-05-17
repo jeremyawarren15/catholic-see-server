@@ -19,6 +19,10 @@
             <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
         </p>
     }
+    @foreach (var request in Model.UnclaimedSubstitutions)
+    {
+        @request
+    }
     <table class="table">
         <thead>
             <tr>

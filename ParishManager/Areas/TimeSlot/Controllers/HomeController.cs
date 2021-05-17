@@ -23,19 +23,22 @@ namespace ParishManager.Areas.TimeSlot.Controllers
         private readonly ITimeService _timeService;
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
+        private readonly ISubstitutionRequestService _substitutionRequestService;
 
         public HomeController(
             ITimeSlotService timeSlotService,
             ITimeSlotCommitmentService commitmentService,
             ITimeService timeService,
             UserManager<User> userManager,
-            IUserService userService)
+            IUserService userService,
+            ISubstitutionRequestService substitutionRequestService)
         {
             _timeSlotService = timeSlotService;
             _commitmentService = commitmentService;
             _timeService = timeService;
             _userManager = userManager;
             _userService = userService;
+            _substitutionRequestService = substitutionRequestService;
         }
 
         public IActionResult Index(int parishId = 1, string alertMessageText = null)
@@ -53,8 +56,12 @@ namespace ParishManager.Areas.TimeSlot.Controllers
                     IsClaimedByUser = x.IsClaimedByUser
                 });
 
+            var availableSubstitutions = _substitutionRequestService
+                .GetUnclaimedSubstitutionRequests(parishId);
+
             var viewModel = new TimeSlotIndexViewModel()
             {
+                UnclaimedSubstitutions = availableSubstitutions,
                 TimeSlots = timeSlots,
                 AlertMessage = alertMessageText,
                 ParishId = parishId,

@@ -40,5 +40,14 @@ namespace ParishManager.Services
 
             return entity;
         }
+
+        public IEnumerable<string> GetUnclaimedSubstitutionRequests(int parishId)
+        {
+            var x = _context.SubstitutionRequests
+                .Where(x => x.TimeSlotCommitment.TimeSlot.ParishId == parishId)
+                .Select(x => x.DateOfSubstitution.ToString());
+
+            return x;
+        }
     }
 }
