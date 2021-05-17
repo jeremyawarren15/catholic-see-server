@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.SubstitutionRequest.Models;
+using ParishManager.Areas.SubstitutionRequest.Models.Home;
 using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.SubstitutionRequest;

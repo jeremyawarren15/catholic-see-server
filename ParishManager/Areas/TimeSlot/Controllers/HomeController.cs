@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.TimeSlot.Models;
+using ParishManager.Areas.TimeSlot.Models.Home;
 using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.TimeSlotModels;

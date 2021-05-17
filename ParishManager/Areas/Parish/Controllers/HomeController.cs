@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParishManager.Areas.Parish.Models;
+using ParishManager.Areas.Parish.Models.Home;
 using ParishManager.Constants;
 using ParishManager.Services.Contracts;
 using System;

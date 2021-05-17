@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.TimeSlot.Models
+namespace ParishManager.Areas.TimeSlot.Models.Home
 {
     public class TimeSlotEditModel
     {
