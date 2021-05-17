@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 namespace ParishManager.Areas.SubstitutionRequest.Controllers
 {
     [Area(AreaName.SubstitutionRequest)]
-    public class HomeControllers : Controller
+    public class HomeController : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly ITimeService _timeService;
         private readonly ISubstitutionRequestService _substitutionRequestService;
         private readonly UserManager<User> _userManager;
 
-        public HomeControllers(
+        public HomeController(
             ITimeSlotService timeSlotService,
             ITimeService timeService,
             ISubstitutionRequestService substitutionRequestService,
@@ -34,9 +34,10 @@ namespace ParishManager.Areas.SubstitutionRequest.Controllers
             _userManager = userManager;
         }
 
-        public ActionResult Create(int timeSlotId)
+        // id is the time slot id
+        public ActionResult Create(int id)
         {
-            var timeSlot = _timeSlotService.Get(timeSlotId);
+            var timeSlot = _timeSlotService.Get(id);
 
             var upcomingDates = GetUpcomingDates(timeSlot.Day);
 
@@ -45,7 +46,7 @@ namespace ParishManager.Areas.SubstitutionRequest.Controllers
                 ParishName = timeSlot.Parish.ParishName,
                 DayOfWeek = timeSlot.Day,
                 HourString = _timeService.ConvertTimeToString(timeSlot.Hour),
-                TimeSlotId = timeSlotId,
+                TimeSlotId = id,
                 UpcomingDates = upcomingDates
             };
 

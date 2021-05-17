@@ -35,7 +35,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             _commitmentService.Claim(userId, id);
 
-            return RedirectToAction("Index", "Home", new { area="TimeSlot", alertMessageText = "Hour successfully claimed!" });
+            return RedirectToAction("Index", "Home", new { area=AreaName.TimeSlot, alertMessageText = "Hour successfully claimed!" });
         }
 
         public IActionResult Unclaim(int id)
@@ -44,7 +44,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             _commitmentService.Unclaim(userId, id);
 
-            return RedirectToAction("Index", "Home", new { area="TimeSlot", alertMessageText = "Hour successfully unclaimed!" });
+            return RedirectToAction("Index", "Home", new { area=AreaName.TimeSlot, alertMessageText = "Hour successfully unclaimed!" });
         }
 
     }

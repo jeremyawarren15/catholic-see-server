@@ -71,7 +71,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "TimeSlot", new { Area = "TimeSlot", parishId, alertMessageText = "Could not create time slot due to improper access rights." });
+                return RedirectToAction("Index", "Home", new { Area = AreaName.TimeSlot, parishId, alertMessageText = "Could not create time slot due to improper access rights." });
             }
 
             var hoursList = GetHoursList();
