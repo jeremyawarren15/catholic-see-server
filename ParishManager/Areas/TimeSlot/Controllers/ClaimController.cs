@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Services.Contracts;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ParishManager.Areas.TimeSlot.Controllers
 {
+    [Area(AreaName.TimeSlot)]
     public class ClaimController : Controller
     {
         private readonly ITimeSlotCommitmentService _commitmentService;

@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParishManager.Models.Parish;
+using ParishManager.Areas.Parish.Models;
+using ParishManager.Constants;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Controllers
+namespace ParishManager.Areas.Parish.Controllers
 {
-    public class ParishController : Controller
+    [Area(AreaName.Parish)]
+    public class HomeController : Controller
     {
         private readonly IParishService _parishService;
 
-        public ParishController(IParishService parishService)
+        public HomeController(IParishService parishService)
         {
             _parishService = parishService;
         }

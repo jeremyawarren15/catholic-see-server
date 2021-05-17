@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Models.Parish
+namespace ParishManager.Areas.Parish.Models
 {
     public class ParishListItemViewModel
     {

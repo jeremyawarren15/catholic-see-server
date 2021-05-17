@@ -2,25 +2,27 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ParishManager.Areas.SubstitutionRequest.Models;
+using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.SubstitutionRequest;
-using ParishManager.Models.SubstitutionRequest;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Controllers
+namespace ParishManager.Areas.SubstitutionRequest.Controllers
 {
-    public class SubstitutionRequestController : Controller
+    [Area(AreaName.SubstitutionRequest)]
+    public class HomeControllers : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly ITimeService _timeService;
         private readonly ISubstitutionRequestService _substitutionRequestService;
         private readonly UserManager<User> _userManager;
 
-        public SubstitutionRequestController(
+        public HomeControllers(
             ITimeSlotService timeSlotService,
             ITimeService timeService,
             ISubstitutionRequestService substitutionRequestService,

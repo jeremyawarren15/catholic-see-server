@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ParishManager.Areas.TimeSlot.Models;
+using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.TimeSlotModels;
 using ParishManager.Services.Contracts;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace ParishManager.Areas.TimeSlot.Controllers
 {
     [Authorize]
-    [Area("TimeSlot")]
+    [Area(AreaName.TimeSlot)]
     public class HomeController : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
