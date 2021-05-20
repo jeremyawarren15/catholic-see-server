@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.Adoration.Models.Home;
+using ParishManager.Areas.Adoration.Models.AvailableHours;
 using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.TimeSlotModels;
@@ -16,7 +16,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 {
     [Authorize]
     [Area(AreaName.Adoration)]
-    public class HomeController : Controller
+    public class AvailableHoursController : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly ITimeSlotCommitmentService _commitmentService;
@@ -25,7 +25,7 @@ namespace ParishManager.Areas.Adoration.Controllers
         private readonly IUserService _userService;
         private readonly ISubstitutionRequestService _substitutionRequestService;
 
-        public HomeController(
+        public AvailableHoursController(
             ITimeSlotService timeSlotService,
             ITimeSlotCommitmentService commitmentService,
             ITimeService timeService,
@@ -74,7 +74,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "Home", new { Area = AreaName.Adoration, parishId, alertMessageText = "Could not create time slot due to improper access rights." });
+                return RedirectToAction("Index", "AvailableHours", new { Area = AreaName.Adoration, parishId, alertMessageText = "Could not create time slot due to improper access rights." });
             }
 
             var hoursList = GetHoursList();
@@ -96,7 +96,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "Home", new {
+                return RedirectToAction("Index", "AvailableHours", new {
                     Area = AreaName.Adoration,
                     parishId = model.ParishId,
                     alertMessageText = "Could not create time slot due to improper access rights."
@@ -115,7 +115,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             _timeSlotService.Create(timeSlot);
 
-            return RedirectToAction("Index", "Home", new {
+            return RedirectToAction("Index", "AvailableHours", new {
                 Area = AreaName.Adoration,
                 parishId = model.ParishId,
                 alertMessageText = "New time slot successfully created!"
@@ -131,7 +131,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "Home", new {
+                return RedirectToAction("Index", "AvailableHours", new {
                     Area = AreaName.Adoration,
                     parishId = timeSlot.Parish.Id,
                     alertMessageText = "Could not edit time slot due to improper access rights."
@@ -176,7 +176,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             _timeSlotService.Update(timeSlot);
 
-            return RedirectToAction("Index", "Home", new
+            return RedirectToAction("Index", "AvailableHours", new
             {
                 Area = AreaName.Adoration,
                 alertMessageText = "Time slot successfully updated!"
@@ -202,7 +202,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "Home", new
+                return RedirectToAction("Index", "AvailableHours", new
                 {
                     Area = AreaName.Adoration,
                     parishId = timeSlot.Parish.Id,
@@ -212,7 +212,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             _timeSlotService.Delete(id);
 
-            return RedirectToAction("Index", "Home", new
+            return RedirectToAction("Index", "AvailableHours", new
             {
                 Area = AreaName.Adoration,
                 id = timeSlot.Parish.Id,

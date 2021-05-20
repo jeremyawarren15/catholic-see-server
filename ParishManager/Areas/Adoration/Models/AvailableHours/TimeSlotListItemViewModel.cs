@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.Adoration.Models.Home
+namespace ParishManager.Areas.Adoration.Models.AvailableHours
 {
     public class TimeSlotListItemViewModel
     {

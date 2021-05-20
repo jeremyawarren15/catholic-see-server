@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.Adoration.Models.Home;
+using ParishManager.Areas.Adoration.Models.AvailableHours;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.Adoration.Models.Home
+namespace ParishManager.Areas.Adoration.Models.AvailableHours
 {
     public class TimeSlotEditModel
     {
