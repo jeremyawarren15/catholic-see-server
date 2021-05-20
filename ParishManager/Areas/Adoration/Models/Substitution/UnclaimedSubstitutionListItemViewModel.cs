@@ -7,6 +7,7 @@ namespace ParishManager.Areas.Adoration.Models.Substitution
 {
     public class UnclaimedSubstitutionListItemViewModel
     {
+        public int SubstitutionId { get; set; }
         public int TimeSlotId { get; set; }
         public DayOfWeek Day { get; set; }
         public string Hour { get; set; }

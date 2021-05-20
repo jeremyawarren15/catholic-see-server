@@ -39,22 +39,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var timeSlot in Model.UnclaimedSubstitutions) {
+        @foreach (var request in Model.UnclaimedSubstitutions) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => timeSlot.Day)
+                    @Html.DisplayFor(modelItem => request.Day)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => timeSlot.Hour)
+                    @Html.DisplayFor(modelItem => request.Hour)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => timeSlot.Location)
+                    @Html.DisplayFor(modelItem => request.Location)
                 </td>
                 <td>
-                    @timeSlot.DateOfSubstitution.ToShortDateString()
+                    @request.DateOfSubstitution.ToShortDateString()
                 </td>
                 <td>
-                    Button to claim
+                    @Html.ActionLink("Pick Up", "PickUpHour", "Substitution", new { Area=AreaName.Adoration, substitutionId = request.SubstitutionId })
                 </td>
             </tr>
         }

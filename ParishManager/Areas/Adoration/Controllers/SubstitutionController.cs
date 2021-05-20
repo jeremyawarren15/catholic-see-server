@@ -51,7 +51,8 @@ namespace ParishManager.Areas.Adoration.Controllers
                     Day = x.TimeSlotCommitment.TimeSlot.Day,
                     Hour = _timeService.ConvertTimeToString(x.TimeSlotCommitment.TimeSlot.Hour),
                     Location = x.TimeSlotCommitment.TimeSlot.Location,
-                    DateOfSubstitution = x.DateOfSubstitution
+                    DateOfSubstitution = x.DateOfSubstitution,
+                    SubstitutionId = x.Id
                 });
 
             var model = new SubstitutionIndexViewModel()
@@ -116,6 +117,14 @@ namespace ParishManager.Areas.Adoration.Controllers
             // TODO: need to add the temp message to display
 
             return RedirectToAction("Index", "Home", new { Area = AreaName.Adoration });
+        }
+
+        public ActionResult PickUpHour(int substitutionId)
+        {
+            var userId = _userManager.GetUserId(User);
+            _substitutionRequestService.PickUpHour(substitutionId, userId);
+
+            return RedirectToAction("Index", "Substitution", new { Area = AreaName.Adoration });
         }
     }
 }

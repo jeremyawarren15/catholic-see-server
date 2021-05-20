@@ -44,7 +44,18 @@ namespace ParishManager.Services
         public IEnumerable<SubstitutionRequest> GetUnclaimedSubstitutionRequests(int parishId)
         {
             return _context.SubstitutionRequests
-                .Where(x => x.TimeSlotCommitment.TimeSlot.ParishId == parishId);
+                .Where(x => x.TimeSlotCommitment.TimeSlot.ParishId == parishId && x.Substitute == null);
+        }
+
+        public bool PickUpHour(int substitutionRequestId, string userId)
+        {
+            var request = _context.SubstitutionRequests
+                .SingleOrDefault(x => x.Id == substitutionRequestId);
+
+            request.UpdatedDate = DateTime.Now;
+            request.SubstitutionUserId = userId;
+
+            return _context.SaveChanges() != 0;
         }
     }
 }

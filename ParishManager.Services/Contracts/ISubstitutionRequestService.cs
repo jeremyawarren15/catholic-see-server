@@ -10,5 +10,6 @@ namespace ParishManager.Services.Contracts
     {
         SubstitutionRequest Create(SubstitutionRequestCreate createModel);
         IEnumerable<SubstitutionRequest> GetUnclaimedSubstitutionRequests(int parishId);
+        bool PickUpHour(int substitutionRequestId, string userId);
     }
 }
