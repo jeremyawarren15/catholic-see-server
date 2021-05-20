@@ -9,6 +9,6 @@ namespace ParishManager.Services.Contracts
     public interface ISubstitutionRequestService : IService<SubstitutionRequest, int>
     {
         SubstitutionRequest Create(SubstitutionRequestCreate createModel);
-        IEnumerable<String> GetUnclaimedSubstitutionRequests(int parishId);
+        IEnumerable<SubstitutionRequest> GetUnclaimedSubstitutionRequests(int parishId);
     }
 }

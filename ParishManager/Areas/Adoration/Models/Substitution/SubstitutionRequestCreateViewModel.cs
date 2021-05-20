@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.SubstitutionRequest.Models.Home
+namespace ParishManager.Areas.Adoration.Models.Substitution
 {
     public class SubstitutionRequestCreateViewModel
     {

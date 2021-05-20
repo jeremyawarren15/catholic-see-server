@@ -1,0 +1,69 @@
+﻿@model ParishManager.Areas.Adoration.Models.Home.TimeSlotIndexViewModel
+@using ParishManager.Constants
+
+@{
+    ViewData["Title"] = "St. John the Evangelist";
+
+    var createRouteData = new Dictionary<string, string>
+    {
+        { "parishId", Model.ParishId.ToString() }
+    };
+}
+
+<partial name="_AlertPartial" for="AlertMessage" />
+
+@if (Model.IsAdmin)
+{
+    <p>
+        <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
+    </p>
+}
+
+<h3>Available Hours</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Day
+            </th>
+            <th>
+                Hour
+            </th>
+            <th>
+                Location
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TimeSlots) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @if (item.IsClaimedByUser)
+                    {
+                        @Html.ActionLink("Unclaim", "Unclaim", "Claim", new { Area=AreaName.Adoration, id = item.TimeSlotId })
+                        <text> | </text>
+                        <a asp-area=@AreaName.Adoration asp-controller="Substitution" asp-action="Create" asp-route-id="@item.TimeSlotId">Request Sub</a>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Claim", "Claim", "Claim", new { Area=AreaName.Adoration, id = item.TimeSlotId })
+                    }
+                    @if (Model.IsAdmin)
+                    {
+                        <text> | </text>@Html.ActionLink("Edit", "Edit", new { AreaName.Adoration, id = item.TimeSlotId })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

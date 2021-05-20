@@ -1,0 +1,62 @@
+﻿
+@model ParishManager.Areas.Adoration.Models.Substitution.SubstitutionIndexViewModel
+
+@{
+    ViewData["Title"] = "St. John the Evangelist";
+
+    var createRouteData = new Dictionary<string, string>
+    {
+        { "parishId", Model.ParishId.ToString() }
+    };
+}
+
+<partial name="_AlertPartial" for="AlertMessage" />
+
+@if (Model.IsAdmin)
+{
+    <p>
+        <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
+    </p>
+}
+
+<h3>Sub Requests</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Day
+            </th>
+            <th>
+                Hour
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var timeSlot in Model.UnclaimedSubstitutions) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => timeSlot.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => timeSlot.Hour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => timeSlot.Location)
+                </td>
+                <td>
+                    @timeSlot.DateOfSubstitution.ToShortDateString()
+                </td>
+                <td>
+                    Button to claim
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

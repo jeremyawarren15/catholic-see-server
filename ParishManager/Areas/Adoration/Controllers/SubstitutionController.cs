@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.SubstitutionRequest.Models.Home;
+using ParishManager.Areas.Adoration.Models.Substitution;
 using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.SubstitutionRequest;
@@ -12,29 +12,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.SubstitutionRequest.Controllers
+namespace ParishManager.Areas.Adoration.Controllers
 {
-    [Area(AreaName.SubstitutionRequest)]
-    public class HomeController : Controller
+    [Area(AreaName.Adoration)]
+    [Authorize]
+    public class SubstitutionController : Controller
     {
-        private readonly ITimeSlotService _timeSlotService;
-        private readonly ITimeService _timeService;
-        private readonly ISubstitutionRequestService _substitutionRequestService;
         private readonly UserManager<User> _userManager;
+        private readonly IUserService _userService;
+        private readonly ISubstitutionRequestService _substitutionRequestService;
+        private readonly ITimeService _timeService;
+        private readonly ITimeSlotService _timeSlotService;
 
-        public HomeController(
-            ITimeSlotService timeSlotService,
-            ITimeService timeService,
+        public SubstitutionController(
+            UserManager<User> userManager,
+            IUserService userService,
             ISubstitutionRequestService substitutionRequestService,
-            UserManager<User> userManager)
+            ITimeService timeService,
+            ITimeSlotService timeSlotService)
         {
-            _timeSlotService = timeSlotService;
-            _timeService = timeService;
-            _substitutionRequestService = substitutionRequestService;
             _userManager = userManager;
+            _userService = userService;
+            _substitutionRequestService = substitutionRequestService;
+            _timeService = timeService;
+            _timeSlotService = timeSlotService;
         }
 
-        // id is the time slot id
+        public IActionResult Index(int parishId = 1, string alertMessageText = null)
+        {
+            var userId = _userManager.GetUserId(User);
+            var isAdmin = _userService.IsAdminForParish(userId, parishId);
+
+            var availableSubstitutions = _substitutionRequestService
+                .GetUnclaimedSubstitutionRequests(parishId)
+                .Select(x => new UnclaimedSubstitutionListItemViewModel()
+                {
+                    TimeSlotId = x.TimeSlotCommitment.TimeSlotId,
+                    Day = x.TimeSlotCommitment.TimeSlot.Day,
+                    Hour = _timeService.ConvertTimeToString(x.TimeSlotCommitment.TimeSlot.Hour),
+                    Location = x.TimeSlotCommitment.TimeSlot.Location,
+                    DateOfSubstitution = x.DateOfSubstitution
+                });
+
+            var model = new SubstitutionIndexViewModel()
+            {
+                ParishId = parishId,
+                UnclaimedSubstitutions = availableSubstitutions,
+                IsAdmin = isAdmin
+            };
+
+            return View(model);
+        }
+
         public ActionResult Create(int id)
         {
             var timeSlot = _timeSlotService.Get(id);
@@ -86,7 +115,7 @@ namespace ParishManager.Areas.SubstitutionRequest.Controllers
 
             // TODO: need to add the temp message to display
 
-            return RedirectToAction("Index", "Home", new { Area = AreaName.TimeSlot });
+            return RedirectToAction("Index", "Home", new { Area = AreaName.Adoration });
         }
     }
 }

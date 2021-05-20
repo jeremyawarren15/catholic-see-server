@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ParishManager.Areas.TimeSlot.Models.Home;
+using ParishManager.Areas.Adoration.Models.Home;
 using ParishManager.Constants;
 using ParishManager.Data.Entities;
 using ParishManager.Data.Models.TimeSlotModels;
@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParishManager.Areas.TimeSlot.Controllers
+namespace ParishManager.Areas.Adoration.Controllers
 {
     [Authorize]
-    [Area(AreaName.TimeSlot)]
+    [Area(AreaName.Adoration)]
     public class HomeController : Controller
     {
         private readonly ITimeSlotService _timeSlotService;
@@ -56,12 +56,8 @@ namespace ParishManager.Areas.TimeSlot.Controllers
                     IsClaimedByUser = x.IsClaimedByUser
                 });
 
-            var availableSubstitutions = _substitutionRequestService
-                .GetUnclaimedSubstitutionRequests(parishId);
-
             var viewModel = new TimeSlotIndexViewModel()
             {
-                UnclaimedSubstitutions = availableSubstitutions,
                 TimeSlots = timeSlots,
                 AlertMessage = alertMessageText,
                 ParishId = parishId,
@@ -78,7 +74,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             if (!isAdmin)
             {
-                return RedirectToAction("Index", "Home", new { Area = AreaName.TimeSlot, parishId, alertMessageText = "Could not create time slot due to improper access rights." });
+                return RedirectToAction("Index", "Home", new { Area = AreaName.Adoration, parishId, alertMessageText = "Could not create time slot due to improper access rights." });
             }
 
             var hoursList = GetHoursList();
@@ -101,7 +97,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
             if (!isAdmin)
             {
                 return RedirectToAction("Index", "Home", new {
-                    Area = AreaName.TimeSlot,
+                    Area = AreaName.Adoration,
                     parishId = model.ParishId,
                     alertMessageText = "Could not create time slot due to improper access rights."
                 });
@@ -120,7 +116,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
             _timeSlotService.Create(timeSlot);
 
             return RedirectToAction("Index", "Home", new {
-                Area = AreaName.TimeSlot,
+                Area = AreaName.Adoration,
                 parishId = model.ParishId,
                 alertMessageText = "New time slot successfully created!"
             });
@@ -136,7 +132,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
             if (!isAdmin)
             {
                 return RedirectToAction("Index", "Home", new {
-                    Area = AreaName.TimeSlot,
+                    Area = AreaName.Adoration,
                     parishId = timeSlot.Parish.Id,
                     alertMessageText = "Could not edit time slot due to improper access rights."
                 });
@@ -182,7 +178,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             return RedirectToAction("Index", "Home", new
             {
-                Area = AreaName.TimeSlot,
+                Area = AreaName.Adoration,
                 alertMessageText = "Time slot successfully updated!"
             });
         }
@@ -208,7 +204,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
             {
                 return RedirectToAction("Index", "Home", new
                 {
-                    Area = AreaName.TimeSlot,
+                    Area = AreaName.Adoration,
                     parishId = timeSlot.Parish.Id,
                     alertMessageText = "Could not delete time slot due to improper access rights."
                 });
@@ -218,7 +214,7 @@ namespace ParishManager.Areas.TimeSlot.Controllers
 
             return RedirectToAction("Index", "Home", new
             {
-                Area = AreaName.TimeSlot,
+                Area = AreaName.Adoration,
                 id = timeSlot.Parish.Id,
                 alertMessageText = "Time slot successfully deleted!"
             });

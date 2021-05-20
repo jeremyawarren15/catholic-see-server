@@ -8,7 +8,6 @@ namespace ParishManager.Constants
     public static class AreaName
     {
         public const string Parish = "Parish";
-        public const string TimeSlot = "TimeSlot";
-        public const string SubstitutionRequest = "SubstitutionRequest";
+        public const string Adoration = "Adoration";
     }
 }

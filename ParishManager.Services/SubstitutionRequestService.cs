@@ -41,13 +41,10 @@ namespace ParishManager.Services
             return entity;
         }
 
-        public IEnumerable<string> GetUnclaimedSubstitutionRequests(int parishId)
+        public IEnumerable<SubstitutionRequest> GetUnclaimedSubstitutionRequests(int parishId)
         {
-            var x = _context.SubstitutionRequests
-                .Where(x => x.TimeSlotCommitment.TimeSlot.ParishId == parishId)
-                .Select(x => x.DateOfSubstitution.ToString());
-
-            return x;
+            return _context.SubstitutionRequests
+                .Where(x => x.TimeSlotCommitment.TimeSlot.ParishId == parishId);
         }
     }
 }
