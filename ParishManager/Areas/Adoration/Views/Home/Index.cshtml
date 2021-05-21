@@ -1,0 +1,44 @@
+﻿@model ParishManager.Areas.Adoration.Models.Home.MyHoursIndexViewModel
+@using ParishManager.Constants
+
+@{
+    ViewData["Title"] = "St. John the Evangelist";
+}
+
+<h3>Claimed Hours</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Day
+            </th>
+            <th>
+                Hour
+            </th>
+            <th>
+                Parish
+            </th>
+            <th>
+                Location
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MyHours) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParishName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

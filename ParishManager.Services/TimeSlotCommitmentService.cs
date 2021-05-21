@@ -53,5 +53,13 @@ namespace ParishManager.Services
 
             return _context.SaveChanges() != 0;
         }
+
+        public IEnumerable<TimeSlotCommitment> GetCommitments(string userId)
+        {
+            var commitments = _context.TimeSlotCommitments
+                .Where(x => x.UserId == userId);
+
+            return commitments;
+        }
     }
 }
