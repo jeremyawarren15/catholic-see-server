@@ -45,7 +45,7 @@ namespace ParishManager.Areas.Adoration.Controllers
             var isAdmin = _userService.IsAdminForParish(userId, parishId);
 
             var commitments = _commitmentService.GetCommitments(userId)
-                .Select(x => new MyHoursListItemViewModel()
+                .Select(x => new ClaimedHoursListItemViewModel()
                 { 
                     TimeSlotId = x.TimeSlotId,
                     Day = x.TimeSlot.Day,
@@ -54,7 +54,7 @@ namespace ParishManager.Areas.Adoration.Controllers
                     Location = x.TimeSlot.Location
                 });
 
-            var viewModel = new MyHoursIndexViewModel()
+            var viewModel = new ClaimedHoursIndexViewModel()
             {
                 MyHours = commitments,
                 AlertMessage = alertMessageText,

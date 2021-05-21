@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ParishManager.Areas.Adoration.Models.Home
 {
-    public class MyHoursListItemViewModel
+    public class ClaimedHoursListItemViewModel
     {
         public int TimeSlotId { get; set; }
         public DayOfWeek Day { get; set; }
