@@ -22,6 +22,22 @@ namespace ParishManager.Data
             builder.Entity<UserParishAssociation>()
                 .HasKey(t => new { t.ParishId, t.UserId });
 
+            builder.Entity<TimeSlotCommitment>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.TimeSlotCommitments)
+                .HasForeignKey("UserId");
+            builder.Entity<TimeSlotCommitment>()
+                .HasOne(x => x.LastModifiedBy)
+                .WithMany(x => x.ModifiedTimeSlots);
+
+            builder.Entity<UserParishAssociation>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.UserParishAssociations)
+                .HasForeignKey("UserId");
+            builder.Entity<UserParishAssociation>()
+                .HasOne(x => x.LastModifiedBy)
+                .WithMany(x => x.ModifiedUserParishAssociations);
+                
             base.OnModelCreating(builder);
         }
 

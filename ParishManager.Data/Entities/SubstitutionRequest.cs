@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParishManager.Data.SharedFields;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace ParishManager.Data.Entities
 {
-    public class SubstitutionRequest
+    public class SubstitutionRequest : Base
     {
         [Key]
         public int Id { get; set; }
@@ -17,8 +18,6 @@ namespace ParishManager.Data.Entities
         public int TimeSlotCommitmentId { get; set; }
         [Required]
         public DateTime DateOfSubstitution { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

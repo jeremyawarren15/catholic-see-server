@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ParishManager.Data.SharedFields;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace ParishManager.Data.Entities
 {
-    public class Parish
+    public class Parish : Base
     {
         [Key]
         public int Id { get; set; }

@@ -9,5 +9,7 @@ namespace ParishManager.Data.Entities
     {
         public virtual ICollection<UserParishAssociation> UserParishAssociations { get; set; }
         public virtual ICollection<TimeSlotCommitment> TimeSlotCommitments { get; set; }
+        public virtual ICollection<TimeSlotCommitment> ModifiedTimeSlots { get; set; }
+        public virtual ICollection<UserParishAssociation> ModifiedUserParishAssociations { get; set; }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ParishManager.Data.SharedFields;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ParishManager.Data.Entities
 {
-    public class TimeSlotCommitment
+    public class TimeSlotCommitment : Base
     {
         [Key]
         public int Id { get; set; }

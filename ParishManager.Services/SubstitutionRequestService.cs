@@ -52,7 +52,8 @@ namespace ParishManager.Services
             var request = _context.SubstitutionRequests
                 .SingleOrDefault(x => x.Id == substitutionRequestId);
 
-            request.UpdatedDate = DateTime.Now;
+            request.LastModifiedDate = DateTime.Now;
+            request.LastModifiedBy = new User() { Id = userId };
             request.SubstitutionUserId = userId;
 
             return _context.SaveChanges() != 0;

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ParishManager.Data.SharedFields;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
 namespace ParishManager.Data.Entities
 {
-    public class UserParishAssociation
+    public class UserParishAssociation : Base
     {
         public int ParishId { get; set; }
         public string UserId { get; set; }
