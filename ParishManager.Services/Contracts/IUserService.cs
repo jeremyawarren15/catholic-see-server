@@ -7,5 +7,6 @@ namespace ParishManager.Services.Contracts
     public interface IUserService
     {
         bool IsAdminForParish(string userId, int parishId);
+        bool AddUserToParish(string userId, int parishId);
     }
 }

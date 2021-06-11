@@ -11,6 +11,8 @@ namespace ParishManager.Data.SharedFields
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? LastModifiedDate { get; set; }
         public virtual User CreatedBy { get; set; }
+        public virtual string CreatedById { get; set; }
         public virtual User LastModifiedBy { get; set; }
+        public virtual string LastModifiedById { get; set; }
     }
 }

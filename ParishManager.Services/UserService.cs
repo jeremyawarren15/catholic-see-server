@@ -1,4 +1,5 @@
 ﻿using ParishManager.Data;
+using ParishManager.Data.Entities;
 using ParishManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,23 @@ namespace ParishManager.Services
         public UserService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public bool AddUserToParish(string userId, int parishId)
+        {
+            var association = new UserParishAssociation()
+            {
+                UserId = userId,
+                ParishId = parishId,
+                CreatedById = userId,
+                CreatedDate = DateTime.UtcNow,
+                IsRegisteredParishioner = true
+            };
+
+            _context.UserParishAssociations
+                .Add(association);
+
+            return _context.SaveChanges() > 0;
         }
 
         public bool IsAdminForParish(string userId, int parishId)
