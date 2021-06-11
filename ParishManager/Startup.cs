@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ParishManager.Attributes;
 using ParishManager.Data;
 using ParishManager.Data.Entities;
 using ParishManager.Services;
@@ -56,9 +57,13 @@ namespace ParishManager
             services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISubstitutionRequestService, SubstitutionRequestService>();
+            services.AddScoped<UserDetailsAttribute>();
             //services.AddScoped<IUserParishAssociationService, UserParishAssociationService>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(UserDetailsAttribute));
+            });
             services.AddRazorPages();
         }
 
