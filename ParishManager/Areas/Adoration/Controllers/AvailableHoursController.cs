@@ -54,7 +54,9 @@ namespace ParishManager.Areas.Adoration.Controllers
                     Hour = x.Hour,
                     Location = x.Location,
                     IsClaimedByUser = x.IsClaimedByUser
-                });
+                })
+                .OrderBy(x => x.Day)
+                .ThenBy(x => x.Hour);
 
             var viewModel = new TimeSlotIndexViewModel()
             {
