@@ -21,6 +21,7 @@
             <th>
                 Location
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +38,11 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.ActionLink("Unclaim", "Unclaim", "Claim", new { Area=AreaName.Adoration, id = item.TimeSlotId })
+                    <text> | </text>
+                    <a asp-area=@AreaName.Adoration asp-controller="Substitution" asp-action="Create" asp-route-id="@item.TimeSlotId">Request Sub</a>
                 </td>
             </tr>
         }

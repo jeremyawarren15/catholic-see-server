@@ -12,58 +12,50 @@
 
 <partial name="_AlertPartial" for="AlertMessage" />
 
-@if (Model.IsAdmin)
-{
-    <p>
-        <a asp-action="Create" asp-all-route-data="createRouteData">Create New</a>
-    </p>
-}
+<div class="d-flex align-items-center justify-content-between">
+    <h3>
+        Available Hours
+    </h3>
+    @if (Model.IsAdmin)
+    {
+        <a asp-action="Create" asp-all-route-data="createRouteData" class="btn btn-sm btn-success">Create New</a>
+    }
+</div>
 
-<h3>Available Hours</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Day
-            </th>
-            <th>
-                Hour
-            </th>
-            <th>
-                Location
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TimeSlots) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Day)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hour)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
+<div class="card-columns mt-3">
+    @foreach (var item in Model.TimeSlots)
+    {
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="card-title">
+                        @item.Day @item.Hour
+                    </h5>
+                    <h6 class="card-subtitle text-muted">
+                        @item.Location
+                    </h6>
+                </div>
+                @if (Model.IsAdmin)
+                {
+                    <a asp-area=@AreaName.Adoration asp-controller="AvailableHours" asp-action="Edit" asp-route-id="@item.TimeSlotId" class="btn btn-sm btn-outline-primary">Edit</a>
+                }
+            </div>
+            <div class="card-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="mt-3">
                     @if (item.IsClaimedByUser)
                     {
-                        @Html.ActionLink("Unclaim", "Unclaim", "Claim", new { Area=AreaName.Adoration, id = item.TimeSlotId })
-                        <text> | </text>
-                        <a asp-area=@AreaName.Adoration asp-controller="Substitution" asp-action="Create" asp-route-id="@item.TimeSlotId">Request Sub</a>
+                        <a asp-area=@AreaName.Adoration asp-controller="Claim" asp-action="Unclaim" asp-route-id="@item.TimeSlotId" class="btn btn-sm btn-danger">Unclaim</a>
+                        <a asp-area=@AreaName.Adoration asp-controller="Substitution" asp-action="Create" asp-route-id="@item.TimeSlotId" class="btn btn-sm btn-outline-primary">Request Sub</a>
                     }
                     else
                     {
-                        @Html.ActionLink("Claim", "Claim", "Claim", new { Area=AreaName.Adoration, id = item.TimeSlotId })
+                        <a asp-area=@AreaName.Adoration asp-controller="Claim" asp-action="Claim" asp-route-id="@item.TimeSlotId" class="btn btn-sm btn-success">Claim</a>
                     }
-                    @if (Model.IsAdmin)
-                    {
-                        <text> | </text>@Html.ActionLink("Edit", "Edit", new { AreaName.Adoration, id = item.TimeSlotId })
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

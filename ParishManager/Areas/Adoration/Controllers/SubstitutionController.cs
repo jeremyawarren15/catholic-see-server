@@ -116,7 +116,7 @@ namespace ParishManager.Areas.Adoration.Controllers
 
             // TODO: need to add the temp message to display
 
-            return RedirectToAction("Index", "AvailableHours", new { Area = AreaName.Adoration });
+            return RedirectToAction("Index", "Home", new { Area = AreaName.Adoration });
         }
 
         public ActionResult PickUpHour(int substitutionId)
