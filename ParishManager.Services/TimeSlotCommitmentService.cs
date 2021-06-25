@@ -23,7 +23,8 @@ namespace ParishManager.Services
             {
                 UserId = userId,
                 TimeSlotId = timeSlotId,
-                Active = true
+                Active = true,
+                CreatedById = userId
             };
 
             _context.TimeSlotCommitments.Add(commitment);

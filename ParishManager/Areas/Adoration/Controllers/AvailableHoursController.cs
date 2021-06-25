@@ -53,7 +53,10 @@ namespace ParishManager.Areas.Adoration.Controllers
                     Day = x.Day,
                     Hour = x.Hour,
                     Location = x.Location,
-                    IsClaimedByUser = x.IsClaimedByUser
+                    IsClaimedByUser = x.IsClaimedByUser,
+                    CommittedAdorers = x.CommittedAdorers,
+                    MinimumAdorers = x.MinimumAdorers,
+                    AdorerCommitmentProgress = (decimal)x.CommittedAdorers / x.MinimumAdorers * 100
                 })
                 .OrderBy(x => x.Day)
                 .ThenBy(x => x.Hour);

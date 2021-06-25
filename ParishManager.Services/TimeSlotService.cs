@@ -52,7 +52,9 @@ namespace ParishManager.Services
                     Day = x.Day,
                     Hour = _timeService.ConvertTimeToString(x.Hour),
                     Location = x.Location,
-                    IsClaimedByUser = x.TimeSlotCommitments.Any(x => x.User.Id == userId)
+                    IsClaimedByUser = x.TimeSlotCommitments.Any(x => x.User.Id == userId),
+                    CommittedAdorers = x.TimeSlotCommitments.Count,
+                    MinimumAdorers = x.MinimumNumberOfAdorers
                 });
         }
 

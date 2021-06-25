@@ -42,8 +42,9 @@
             </div>
             <div class="card-body">
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar" role="progressbar" style="width: @(item.AdorerCommitmentProgress + "%");" aria-valuenow="@item.AdorerCommitmentProgress" aria-valuemin="0" aria-valuemax="@item.MinimumAdorers"></div>
                 </div>
+                <p class="text-muted text-right">@item.CommittedAdorers/@item.MinimumAdorers</p>
                 <div class="mt-3">
                     @if (item.IsClaimedByUser)
                     {
