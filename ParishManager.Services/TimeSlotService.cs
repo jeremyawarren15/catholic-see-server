@@ -27,7 +27,8 @@ namespace ParishManager.Services
                 ParishId = model.ParishId,
                 Day = model.Day,
                 Hour = model.Hour,
-                Location = model.Location
+                Location = model.Location,
+                MinimumNumberOfAdorers = model.MinimumNumberOfAdorers
             };
 
             var timeSlot = _context.TimeSlots
