@@ -8,5 +8,6 @@ namespace ParishManager.Services.Contracts
     {
         bool IsAdminForParish(string userId, int parishId);
         bool AddUserToParish(string userId, int parishId);
+        List<int> GetParishIdsForAdmin(string userId);
     }
 }

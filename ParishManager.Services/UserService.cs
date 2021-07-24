@@ -34,6 +34,14 @@ namespace ParishManager.Services
             return _context.SaveChanges() > 0;
         }
 
+        public List<int> GetParishIdsForAdmin(string userId)
+        {
+            return _context.UserParishAssociations
+                .Where(x => x.UserId == userId && x.IsAdmin)
+                .Select(x => x.ParishId)
+                .ToList();
+        }
+
         public bool IsAdminForParish(string userId, int parishId)
         {
             var association = _context.UserParishAssociations

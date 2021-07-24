@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Services", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParishManager.Services.Test", "ParishManager.Services.Test\ParishManager.Services.Test.csproj", "{8CA8CF9C-7787-4F64-910A-237875F30DA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParishManager.Api", "ParishManager.Api\ParishManager.Api.csproj", "{AAD526A3-30AB-4C10-A1B1-3C6C7647B250}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8CA8CF9C-7787-4F64-910A-237875F30DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA8CF9C-7787-4F64-910A-237875F30DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CA8CF9C-7787-4F64-910A-237875F30DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD526A3-30AB-4C10-A1B1-3C6C7647B250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD526A3-30AB-4C10-A1B1-3C6C7647B250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD526A3-30AB-4C10-A1B1-3C6C7647B250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD526A3-30AB-4C10-A1B1-3C6C7647B250}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
