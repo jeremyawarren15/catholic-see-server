@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ParishManager.Services.Contracts
 {
     public interface ITimeSlotCommitmentService
     {
-        bool Claim(string user, int timeSlot);
-        bool Unclaim(string user, int timeSlot);
+        Task<bool> ClaimAsync(string user, int timeSlot);
+        Task<bool> UnclaimAsync(string user, int timeSlot);
         IEnumerable<User> GetCommitedUsersForTimeSlot(int timeSlotId);
         IEnumerable<TimeSlotCommitment> GetCommitments(string userId);
     }

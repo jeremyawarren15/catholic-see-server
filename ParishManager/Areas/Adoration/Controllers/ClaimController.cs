@@ -29,20 +29,20 @@ namespace ParishManager.Areas.Adoration.Controllers
             return View();
         }
 
-        public IActionResult Claim(int id)
+        public async Task<IActionResult> Claim(int id)
         {
-            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.GetUserAsync(User);
 
-            _commitmentService.Claim(userId, id);
+            await _commitmentService.ClaimAsync(user.Id, id);
 
             return RedirectToAction("Index", "AvailableHours", new { area=AreaName.Adoration, alertMessageText = "Hour successfully claimed!" });
         }
 
-        public IActionResult Unclaim(int id)
+        public async Task<IActionResult> Unclaim(int id)
         {
-            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.GetUserAsync(User);
 
-            _commitmentService.Unclaim(userId, id);
+            await _commitmentService.UnclaimAsync(user.Id, id);
 
             return RedirectToAction("Index", "Home", new { area=AreaName.Adoration, alertMessageText = "Hour successfully unclaimed!" });
         }

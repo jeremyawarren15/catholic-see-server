@@ -18,5 +18,7 @@ namespace ParishManager.Data.Entities
         public virtual TimeSlot TimeSlot { get; set; }
         [Required]
         public virtual User User { get; set; }
+
+        public virtual IEnumerable<SubstitutionRequest> SubstitutionRequests { get; set; }
     }
 }

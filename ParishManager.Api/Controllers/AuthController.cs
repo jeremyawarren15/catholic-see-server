@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using ParishManager.Api.Models;
 using ParishManager.Data.Entities;
@@ -16,15 +17,17 @@ using System.Threading.Tasks;
 namespace ParishManager.Api.Controllers
 {
     [ApiController]
-    public class TokenController : Controller
+    public class AuthController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
+        private readonly IParishService _parishService;
 
-        public TokenController(UserManager<User> userManager, IUserService userService)
+        public AuthController(UserManager<User> userManager, IUserService userService, IParishService parishService)
         {
             _userManager = userManager;
             _userService = userService;
+            _parishService = parishService;
         }
 
         [Route("/token")]
@@ -49,6 +52,53 @@ namespace ParishManager.Api.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [Route("/register")]
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            throw new NotImplementedException();
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+            //}
+
+            //var user = new User
+            //{
+            //    UserName = model.Email,
+            //    Email = model.Email,
+            //    FirstName = model.FirstName,
+            //    LastName = model.LastName,
+            //};
+
+            //var result = await _userManager.CreateAsync(user, model.Password);
+            //if (!result.Succeeded)
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError(string.Empty, error.Description);
+            //    }
+
+            //    return BadRequest();
+            //}
+
+            //user = await _userManager.FindByEmailAsync(user.Email);
+            //// We want to default this user to be a parishioner
+            //// of St. John the Evangelist until more parishes
+            //// are supported. St. Johns should be the first parish.
+            //_userService.AddUserToParish(user.Id, 1);
+
+            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            //var callbackUrl = Url.Page(
+            //    "/Account/ConfirmEmail",
+            //    pageHandler: null,
+            //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+            //    protocol: Request.Scheme);
+
+            //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+            //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
         }
 
         private async Task<bool> IsValidUsernameAndPassword(string username, string password)

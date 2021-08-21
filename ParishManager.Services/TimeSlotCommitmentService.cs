@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ParishManager.Services
 {
@@ -17,8 +18,16 @@ namespace ParishManager.Services
             _context = context;
         }
 
-        public bool Claim(string userId, int timeSlotId)
+        public async Task<bool> ClaimAsync(string userId, int timeSlotId)
         {
+            var anyPreviousCommitments = _context.TimeSlotCommitments
+                .Any(x => x.UserId == userId && x.TimeSlotId == timeSlotId);
+
+            if (anyPreviousCommitments)
+            {
+                return false;
+            }
+
             var commitment = new TimeSlotCommitment()
             {
                 UserId = userId,
@@ -27,9 +36,9 @@ namespace ParishManager.Services
                 CreatedById = userId
             };
 
-            _context.TimeSlotCommitments.Add(commitment);
+            await _context.TimeSlotCommitments.AddAsync(commitment);
 
-            return _context.SaveChanges() != 0;
+            return await _context.SaveChangesAsync() != 0;
         }
 
         public IEnumerable<User> GetCommitedUsersForTimeSlot(int timeSlotId)
@@ -40,7 +49,7 @@ namespace ParishManager.Services
                 .Select(x => x.User);
         }
 
-        public bool Unclaim(string user, int timeSlot)
+        public async Task<bool> UnclaimAsync(string user, int timeSlot)
         {
             var commitment = _context.TimeSlotCommitments
                 .SingleOrDefault(x => x.UserId == user && x.TimeSlotId == timeSlot);
@@ -52,7 +61,7 @@ namespace ParishManager.Services
 
             _context.TimeSlotCommitments.Remove(commitment);
 
-            return _context.SaveChanges() != 0;
+            return await _context.SaveChangesAsync() != 0;
         }
 
         public IEnumerable<TimeSlotCommitment> GetCommitments(string userId)
