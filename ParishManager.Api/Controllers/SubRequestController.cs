@@ -60,5 +60,18 @@ namespace ParishManager.Api.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet("/api/subRequests/")]
+        public IEnumerable<SubRequestListItem> Get()
+        {
+            return _substitutionRequestService.GetAll()
+                .Select(x => new SubRequestListItem
+                {
+                    SubRequestId = x.Id,
+                    DateOfSubstitution = x.DateOfSubstitution,
+                    Location = x.TimeSlotCommitment.TimeSlot.Location,
+                    TimeSlotHour = x.TimeSlotCommitment.TimeSlot.Hour
+                });
+        }
     }
 }

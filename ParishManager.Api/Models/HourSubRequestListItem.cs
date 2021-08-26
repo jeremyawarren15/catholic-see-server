@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ParishManager.Api.Models
 {
-    public class SubRequestListItem
+    public class HourSubRequestListItem
     {
         public int SubRequestId { get; set; }
-        public DateTime DateOfSubstitution { get; set; }
-        public int TimeSlotHour { get; set; }
-        public string Location { get; set; }
+        public bool HasBeenPickedUp { get; set; }
+        public string DateOfSubstitution { get; set; }
     }
 }

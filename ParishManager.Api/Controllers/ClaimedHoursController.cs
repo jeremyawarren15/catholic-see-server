@@ -44,7 +44,7 @@ namespace ParishManager.Api.Controllers
                     SubRequests =
                         x.TimeSlotCommitments
                             .Where(x => x.User == user)
-                            .SelectMany(x => x.SubstitutionRequests.Select(x => new SubRequestListItem
+                            .SelectMany(x => x.SubstitutionRequests.Select(x => new HourSubRequestListItem
                             {
                                 SubRequestId = x.Id,
                                 HasBeenPickedUp = string.IsNullOrEmpty(x.SubstitutionUserId),

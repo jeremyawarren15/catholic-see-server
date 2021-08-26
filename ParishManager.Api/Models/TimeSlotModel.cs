@@ -15,6 +15,6 @@ namespace ParishManager.Api.Models
         public string Location { get; set; }
         public int MinimumAdorers { get; set; }
         public int AdorerCount { get; set; }
-        public IEnumerable<SubRequestListItem> SubRequests { get; set; }
+        public IEnumerable<HourSubRequestListItem> SubRequests { get; set; }
     }
 }
