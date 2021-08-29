@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParishManager.Data\ParishManager.Data.csproj" />
-    <ProjectReference Include="..\ParishManager\ParishManager.csproj" />
   </ItemGroup>
 
 </Project>
