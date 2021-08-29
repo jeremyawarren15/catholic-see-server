@@ -19,11 +19,16 @@ namespace ParishManager.Api.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly ISubstitutionRequestService _substitutionRequestService;
+        private readonly ITimeSlotCommitmentService _timeSlotCommitmentService;
 
-        public SubRequestController(UserManager<User> userManager, ISubstitutionRequestService substitutionRequestService)
+        public SubRequestController(
+            UserManager<User> userManager,
+            ISubstitutionRequestService substitutionRequestService,
+            ITimeSlotCommitmentService timeSlotCommitmentService)
         {
             _userManager = userManager;
             _substitutionRequestService = substitutionRequestService;
+            _timeSlotCommitmentService = timeSlotCommitmentService;
         }
 
         [HttpPost("create")]
@@ -38,39 +43,77 @@ namespace ParishManager.Api.Controllers
                 TimeSlotId = model.TimeSlotId
             };
 
-            var savedCorrectly = _substitutionRequestService.Create(dto) != null;
+            var succeeded = _substitutionRequestService.Create(dto) != null;
 
-            if (savedCorrectly)
-            {
-                return Ok();
-            }
-
-            return BadRequest();
+            return GetConditionalResult(succeeded);
         }
 
         [HttpPost("cancel/{id}")]
         public async Task<ActionResult> Cancel(int id)
         {
             // need to check if the user is supposed to be able to do this
-            var success = _substitutionRequestService.Delete(id);
-            if (success)
-            {
-                return Ok();
-            }
+            var succeeded = _substitutionRequestService.Delete(id);
 
-            return BadRequest();
+            return GetConditionalResult(succeeded);
+        }
+
+        [HttpPost("pickUp/{id}")]
+        public async Task<ActionResult> PickUp(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var succeeded = _substitutionRequestService.PickUpHour(id, user.Id);
+
+            return GetConditionalResult(succeeded);
+        }
+
+        [HttpGet("/api/subRequests/personal")]
+        public async Task<IEnumerable<HourSubRequestListItem>> GetPersonal()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return GetSubRequestModel(
+                _substitutionRequestService.GetPersonalSubRequestsForUser(user.Id));
+        }
+
+        [HttpGet("/api/subRequests/claimed")]
+        public async Task<IEnumerable<HourSubRequestListItem>> GetClaimed()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return GetSubRequestModel(
+                _substitutionRequestService.GetClaimedSubRequestsForUser(user.Id));
         }
 
         [HttpGet("/api/subRequests/")]
-        public IEnumerable<SubRequestListItem> Get()
+        public async Task<IEnumerable<SubRequestListItem>> Get()
         {
-            return _substitutionRequestService.GetAll()
+            var user = await _userManager.GetUserAsync(User);
+
+            return _substitutionRequestService.GetUnclaimedSubstitutionRequests(1)
+                .Where(x => x.UserId != user.Id)
                 .Select(x => new SubRequestListItem
                 {
                     SubRequestId = x.Id,
                     DateOfSubstitution = x.DateOfSubstitution,
                     Location = x.TimeSlotCommitment.TimeSlot.Location,
                     TimeSlotHour = x.TimeSlotCommitment.TimeSlot.Hour
+                });
+        }
+
+        private ActionResult GetConditionalResult(bool succeeded)
+        {
+            return succeeded ? Ok() : BadRequest();
+        }
+
+        private IEnumerable<HourSubRequestListItem> GetSubRequestModel(IEnumerable<SubstitutionRequest> subRequests)
+        {
+            return subRequests
+                .Select(x => new HourSubRequestListItem
+                {
+                    SubRequestId = x.Id,
+                    HasBeenPickedUp = !string.IsNullOrEmpty(x.SubstitutionUserId),
+                    DateOfSubstitution = x.DateOfSubstitution.ToShortDateString(),
                 });
         }
     }

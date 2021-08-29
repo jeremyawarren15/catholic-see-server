@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ParishManager.Services
 {
@@ -41,6 +42,18 @@ namespace ParishManager.Services
             return entity;
         }
 
+        public IEnumerable<SubstitutionRequest> GetPersonalSubRequestsForUser(string userId)
+        {
+            return _context.SubstitutionRequests
+                .Where(x => x.UserId == userId);
+        }
+
+        public IEnumerable<SubstitutionRequest> GetClaimedSubRequestsForUser(string userId)
+        {
+            return _context.SubstitutionRequests
+                .Where(x => x.SubstitutionUserId == userId);
+        }
+
         public IEnumerable<SubstitutionRequest> GetUnclaimedSubstitutionRequests(int parishId)
         {
             return _context.SubstitutionRequests
@@ -53,7 +66,7 @@ namespace ParishManager.Services
                 .SingleOrDefault(x => x.Id == substitutionRequestId);
 
             request.LastModifiedDate = DateTime.Now;
-            request.LastModifiedBy = new User() { Id = userId };
+            request.LastModifiedById = userId;
             request.SubstitutionUserId = userId;
 
             return _context.SaveChanges() != 0;

@@ -18,11 +18,16 @@ namespace ParishManager.Api.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly ITimeSlotCommitmentService _timeSlotCommitmentService;
+        private readonly ISubstitutionRequestService _substitutionRequestService;
 
-        public ClaimedHoursController(UserManager<User> userManager, ITimeSlotCommitmentService timeSlotCommitementService)
+        public ClaimedHoursController(
+            UserManager<User> userManager,
+            ITimeSlotCommitmentService timeSlotCommitementService,
+            ISubstitutionRequestService substitutionRequestService)
         {
             _userManager = userManager;
             _timeSlotCommitmentService = timeSlotCommitementService;
+            _substitutionRequestService = substitutionRequestService;
         }
 
         [HttpGet]
@@ -41,15 +46,6 @@ namespace ParishManager.Api.Controllers
                     IsClaimedByUser = x.TimeSlotCommitments.Any(x => x.User == user),
                     Location = x.Location,
                     MinimumAdorers = x.MinimumNumberOfAdorers,
-                    SubRequests =
-                        x.TimeSlotCommitments
-                            .Where(x => x.User == user)
-                            .SelectMany(x => x.SubstitutionRequests.Select(x => new HourSubRequestListItem
-                            {
-                                SubRequestId = x.Id,
-                                HasBeenPickedUp = string.IsNullOrEmpty(x.SubstitutionUserId),
-                                DateOfSubstitution = x.DateOfSubstitution.ToShortDateString(),
-                            })),
                     ParishId = x.ParishId
                 });
         }
