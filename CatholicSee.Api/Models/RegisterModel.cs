@@ -17,7 +17,7 @@ namespace CatholicSee.Api.Models
         public string LastName { get; set; }
 
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Email address is not valid.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

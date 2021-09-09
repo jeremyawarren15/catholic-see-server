@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using CatholicSee.Api.Models;
@@ -13,17 +12,21 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CatholicSee.Api.Controllers
 {
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
         private readonly IParishService _parishService;
 
-        public AuthController(UserManager<User> userManager, IUserService userService, IParishService parishService)
+        public AuthController(
+            UserManager<User> userManager,
+            IUserService userService,
+            IParishService parishService)
         {
             _userManager = userManager;
             _userService = userService;
@@ -56,38 +59,38 @@ namespace CatholicSee.Api.Controllers
 
         [Route("/register")]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            throw new NotImplementedException();
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest();
-            //}
+            var user = new User
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+            };
 
-            //var user = new User
-            //{
-            //    UserName = model.Email,
-            //    Email = model.Email,
-            //    FirstName = model.FirstName,
-            //    LastName = model.LastName,
-            //};
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
 
-            //var result = await _userManager.CreateAsync(user, model.Password);
-            //if (!result.Succeeded)
-            //{
-            //    foreach (var error in result.Errors)
-            //    {
-            //        ModelState.AddModelError(string.Empty, error.Description);
-            //    }
+                return BadRequest(result.Errors);
+            }
 
-            //    return BadRequest();
-            //}
+            user = await _userManager.FindByEmailAsync(user.Email);
+            // We want to default this user to be a parishioner
+            // of St. John the Evangelist until more parishes
+            // are supported. St. Johns should be the first parish.
+            var wasAddedToParish = _userService.AddUserToParish(user.Id, 1);
+            if (!wasAddedToParish)
+            {
+                return BadRequest();
+            }
 
-            //user = await _userManager.FindByEmailAsync(user.Email);
-            //// We want to default this user to be a parishioner
-            //// of St. John the Evangelist until more parishes
-            //// are supported. St. Johns should be the first parish.
-            //_userService.AddUserToParish(user.Id, 1);
+            return Ok();
 
             //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
