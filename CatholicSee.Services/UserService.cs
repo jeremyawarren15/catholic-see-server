@@ -8,11 +8,11 @@ using System.Text;
 
 namespace CatholicSee.Services
 {
-    public class UserService : IUserService
+    public class UserService : ServiceBase<User, string>, IUserService
     {
         private readonly ApplicationDbContext _context;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
@@ -53,6 +53,26 @@ namespace CatholicSee.Services
             }
 
             return true;
+        }
+
+        public User Update(User model)
+        {
+            var user = _context.Users.Single(x => x.Email == model.Email);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.ShouldReceiveNewHourEmail = model.ShouldReceiveNewHourEmail;
+            user.ShouldReceiveSubRequestsEmail = model.ShouldReceiveSubRequestsEmail;
+
+            var numberOfChanges = _context.SaveChanges();
+
+            if (numberOfChanges > 0)
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }

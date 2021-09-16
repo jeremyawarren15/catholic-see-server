@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using CatholicSee.Api.Models;
 using CatholicSee.Data.Entities;
@@ -13,52 +12,74 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using CatholicSee.Data.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CatholicSee.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
         private readonly IParishService _parishService;
+        private readonly IAuthService _authService;
+
+        private const string REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
         public AuthController(
             UserManager<User> userManager,
             IUserService userService,
-            IParishService parishService)
+            IParishService parishService,
+            IAuthService authService)
         {
             _userManager = userManager;
             _userService = userService;
             _parishService = parishService;
+            _authService = authService;
         }
 
         [Route("/token")]
         [HttpPost]
-        public async Task<IActionResult> Create(TokenModel model)
+        [AllowAnonymous]
+        public IActionResult Token(AuthenticateRequest model)
         {
-            if (await IsValidUsernameAndPassword(model.UserName, model.Password))
-            {
-                var token = await GenerateToken(model.UserName);
+            var response = _authService.Authenticate(model, GetIpAddress());
+            SetTokenCookie(response.RefreshToken);
+            return Ok(response);
+        }
 
-                Response.Cookies.Append(
-                    "jwt-token",
-                    token.Access_Token,
-                    new CookieOptions
-                    {
-                        HttpOnly = true
-                    });
+        [Route("/refresh-token")]
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult RefreshToken()
+        {
+            var refreshToken = Request.Cookies[REFRESH_TOKEN_COOKIE_NAME];
+            var response = _authService.RefreshToken(refreshToken, GetIpAddress());
+            SetTokenCookie(response.RefreshToken);
+            return Ok(response);
+        }
 
-                return new ObjectResult(token);
-            }
-            else
+        [Route("/revoke-token")]
+        [HttpPost]
+        public IActionResult RevokeToken(RevokeTokenRequest model)
+        {
+            var token = model.Token ?? Request.Cookies[REFRESH_TOKEN_COOKIE_NAME];
+
+            if (string.IsNullOrEmpty(token))
             {
-                return BadRequest();
+                return BadRequest("Token is required");
             }
+
+            _authService.RevokeToken(token, GetIpAddress());
+
+            return Ok("Token revoked");
         }
 
         [Route("/register")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var user = new User
@@ -69,7 +90,13 @@ namespace CatholicSee.Api.Controllers
                 LastName = model.LastName,
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var registerRequest = new RegisterRequest
+            {
+                User = user,
+                Password = model.Password
+            };
+
+            var result = _authService.Register(registerRequest);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -81,6 +108,7 @@ namespace CatholicSee.Api.Controllers
             }
 
             user = await _userManager.FindByEmailAsync(user.Email);
+
             // We want to default this user to be a parishioner
             // of St. John the Evangelist until more parishes
             // are supported. St. Johns should be the first parish.
@@ -104,40 +132,27 @@ namespace CatholicSee.Api.Controllers
             //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
         }
 
-        private async Task<bool> IsValidUsernameAndPassword(string username, string password)
+        private void SetTokenCookie(string token)
         {
-            var user = await _userManager.FindByEmailAsync(username);
-            return await _userManager.CheckPasswordAsync(user, password);
+            // append cookie with refresh token to the http response
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append(REFRESH_TOKEN_COOKIE_NAME, token, cookieOptions);
         }
 
-        private async Task<dynamic> GenerateToken(string userName)
+        private string GetIpAddress()
         {
-            var user = await _userManager.FindByEmailAsync(userName);
-
-            var claims = new List<Claim>
+            // get source ip address for the current request
+            if (Request.Headers.ContainsKey("X-Forwarded-For"))
             {
-                new Claim(ClaimTypes.Name, userName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
-            };
+                return Request.Headers["X-Forwarded-For"];
+            }
 
-            var token = new JwtSecurityToken(
-                new JwtHeader(
-                    new SigningCredentials(
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisIsASecretKey")),
-                        SecurityAlgorithms.HmacSha256)),
-                new JwtPayload(claims));
-
-            var output = new
-            {
-                Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
-                UserName = userName,
-                ParishAdminAccessIds = _userService.GetParishIdsForAdmin(user.Id),
-                Name = user.FirstName + " " + user.LastName
-            };
-
-            return output;
+            return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
     }
 }

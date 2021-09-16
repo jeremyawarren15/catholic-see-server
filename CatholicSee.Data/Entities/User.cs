@@ -12,10 +12,15 @@ namespace CatholicSee.Data.Entities
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [Required]
+        public bool ShouldReceiveNewHourEmail { get; set; }
+        [Required]
+        public bool ShouldReceiveSubRequestsEmail { get; set; }
 
         public virtual ICollection<UserParishAssociation> UserParishAssociations { get; set; }
         public virtual ICollection<TimeSlotCommitment> TimeSlotCommitments { get; set; }
         public virtual ICollection<TimeSlotCommitment> ModifiedTimeSlots { get; set; }
         public virtual ICollection<UserParishAssociation> ModifiedUserParishAssociations { get; set; }
+        public virtual List<RefreshToken> RefreshTokens { get; set; }
     }
 }

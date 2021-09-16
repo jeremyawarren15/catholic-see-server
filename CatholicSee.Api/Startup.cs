@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CatholicSee.Data.Models;
 
 namespace CatholicSee.Api
 {
@@ -40,6 +41,10 @@ namespace CatholicSee.Api
                     .UseLazyLoadingProxies()
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddCors();
+            services.AddControllers();
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -50,10 +55,9 @@ namespace CatholicSee.Api
             services.AddScoped<ITimeSlotCommitmentService, TimeSlotCommitmentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISubstitutionRequestService, SubstitutionRequestService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJwtService, JwtService>();
 
-            services.AddCors();
-
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatholicSee.Api", Version = "v1" });
@@ -69,11 +73,11 @@ namespace CatholicSee.Api
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisIsASecretKey")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"])),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(5),
+                    ClockSkew = TimeSpan.FromMinutes(0),
                 };
             });
         }
@@ -81,30 +85,26 @@ namespace CatholicSee.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CatholicSee.Api v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
 
             app.UseCors(x => x
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .SetIsOriginAllowed(origin => true)
-            .AllowCredentials());
+                .SetIsOriginAllowed(origin => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
-            app.UseRouting();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(x => { x.MapControllers(); });
         }
     }
 }

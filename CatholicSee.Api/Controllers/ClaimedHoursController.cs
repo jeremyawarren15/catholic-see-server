@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,6 +15,7 @@ namespace CatholicSee.Api.Controllers
 {
     [Route("api/claimedHours")]
     [ApiController]
+    [Authorize]
     public class ClaimedHoursController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -34,7 +36,7 @@ namespace CatholicSee.Api.Controllers
         public async Task<IEnumerable<TimeSlotModel>> Get()
         {
             var user = await _userManager.GetUserAsync(User);
-
+            
             return _timeSlotCommitmentService.GetCommitments(user.Id)
                 .Select(x => x.TimeSlot)
                 .Select(x => new TimeSlotModel

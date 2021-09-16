@@ -4,14 +4,16 @@ using CatholicSee.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CatholicSee.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210913031516_AddEmailConfigurationsToUser")]
+    partial class AddEmailConfigurationsToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,56 +547,6 @@ namespace CatholicSee.Data.Migrations
                     b.Navigation("TimeSlot");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CatholicSee.Data.Entities.User", b =>
-                {
-                    b.OwnsMany("CatholicSee.Data.Entities.RefreshToken", "RefreshTokens", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<DateTime>("Created")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("CreatedByIp")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("Expires")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("ReasonRevoked")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ReplacedByToken")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime?>("Revoked")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("RevokedByIp")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Token")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("UserId")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("UserId");
-
-                            b1.ToTable("RefreshToken");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("CatholicSee.Data.Entities.UserParishAssociation", b =>
