@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,20 +16,18 @@ namespace CatholicSee.Api.Controllers
 {
     [Route("api/subRequest")]
     [ApiController]
+    [Authorize]
     public class SubRequestController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly ISubstitutionRequestService _substitutionRequestService;
-        private readonly ITimeSlotCommitmentService _timeSlotCommitmentService;
 
         public SubRequestController(
             UserManager<User> userManager,
-            ISubstitutionRequestService substitutionRequestService,
-            ITimeSlotCommitmentService timeSlotCommitmentService)
+            ISubstitutionRequestService substitutionRequestService)
         {
             _userManager = userManager;
             _substitutionRequestService = substitutionRequestService;
-            _timeSlotCommitmentService = timeSlotCommitmentService;
         }
 
         [HttpPost("create")]
@@ -86,6 +85,7 @@ namespace CatholicSee.Api.Controllers
         }
 
         [HttpGet("/api/subRequests/")]
+        [AllowAnonymous]
         public async Task<IEnumerable<SubRequestListItem>> Get()
         {
             var user = await _userManager.GetUserAsync(User);

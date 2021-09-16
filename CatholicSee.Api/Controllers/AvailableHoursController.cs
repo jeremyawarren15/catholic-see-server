@@ -43,29 +43,5 @@ namespace CatholicSee.Api.Controllers
                 ParishId = x.ParishId
             });
         }
-
-        [HttpGet("{id}")]
-        public string Get(int parishId)
-        {
-            return "value";
-        }
-
-        // POST api/<AvailableHoursController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<AvailableHoursController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AvailableHoursController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
