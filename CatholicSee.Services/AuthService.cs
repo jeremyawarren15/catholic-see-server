@@ -70,11 +70,23 @@ namespace CatholicSee.Services.Contracts
 
             newUser.PasswordHash = BCryptNet.HashPassword(model.Password);
 
-            _context.Users.Add(newUser);
+            var createdUser = _context.Users.Add(newUser);
+
+            _context.SaveChanges();
+
+            var association = new UserParishAssociation()
+            {
+                ParishId = 1,
+                UserId = createdUser.Entity.Id,
+                IsRegisteredParishioner = true,
+                CreatedById = createdUser.Entity.Id
+            };
+
+            _context.UserParishAssociations.Add(association);
 
             if (_context.SaveChanges() > 0)
             {
-                return GetSuccessfulResponse();
+                return GetSuccessfulResponse(createdUser.Entity);
             }
 
             errors.Add(new RegisterError
@@ -90,19 +102,17 @@ namespace CatholicSee.Services.Contracts
             return new RegisterResponse
             {
                 Succeeded = false,
-                Errors = new List<RegisterError>
-                { 
-                    new RegisterError() 
-                }
+                Errors = errors
             };
         }
 
-        private RegisterResponse GetSuccessfulResponse()
+        private RegisterResponse GetSuccessfulResponse(User createdUser)
         {
             return new RegisterResponse
             {
                 Succeeded = true,
-                Errors = new List<RegisterError>()
+                Errors = new List<RegisterError>(),
+                CreatedUser = createdUser
             };
         }
 

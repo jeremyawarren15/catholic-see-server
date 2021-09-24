@@ -107,16 +107,7 @@ namespace CatholicSee.Api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            user = await _userManager.FindByEmailAsync(user.Email);
-
-            // We want to default this user to be a parishioner
-            // of St. John the Evangelist until more parishes
-            // are supported. St. Johns should be the first parish.
-            var wasAddedToParish = _userService.AddUserToParish(user.Id, 1);
-            if (!wasAddedToParish)
-            {
-                return BadRequest();
-            }
+            user = await _userManager.FindByEmailAsync(result.CreatedUser.Email);
 
             return Ok();
 
