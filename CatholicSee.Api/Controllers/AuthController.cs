@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace CatholicSee.Api.Controllers
 {
     [ApiController]
-    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -63,9 +62,10 @@ namespace CatholicSee.Api.Controllers
 
         [Route("/revoke-token")]
         [HttpPost]
-        public IActionResult RevokeToken(RevokeTokenRequest model)
+        [AllowAnonymous]
+        public IActionResult RevokeToken()
         {
-            var token = model.Token ?? Request.Cookies[REFRESH_TOKEN_COOKIE_NAME];
+            var token = Request.Cookies[REFRESH_TOKEN_COOKIE_NAME];
 
             if (string.IsNullOrEmpty(token))
             {
@@ -129,7 +129,11 @@ namespace CatholicSee.Api.Controllers
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
+                Expires = DateTime.UtcNow.AddDays(7),
+                Domain = "localhost",
+                SameSite = SameSiteMode.None,
+                Secure = true,
+                Path = "http://localhost:3000"
             };
 
             Response.Cookies.Append(REFRESH_TOKEN_COOKIE_NAME, token, cookieOptions);
